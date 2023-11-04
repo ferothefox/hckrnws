@@ -31,7 +31,7 @@ export default function Document() {
 
         <meta
           name="theme-color"
-          content="#18181b"
+          content="#000000"
           media="(prefers-color-scheme: dark)"
         />
         <script
