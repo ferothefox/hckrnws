@@ -16,7 +16,6 @@ function App({ Component, pageProps }: AppProps) {
         <h1 className="hidden">hckrnws</h1>
         <Header />
         <Component {...pageProps} />
-        <CraftedBy />
       </main>
     </ThemeProvider>
   );
