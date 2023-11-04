@@ -28,7 +28,6 @@ export default function Document() {
           content="#fafafa"
           media="(prefers-color-scheme: light)"
         />
-
         <meta
           name="theme-color"
           content="#000000"
