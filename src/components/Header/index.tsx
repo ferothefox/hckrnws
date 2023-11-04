@@ -82,7 +82,7 @@ const Header: React.FC = () => {
     <div className="flex items-center">
       {selectedItem?.icon}
       <span className="text-sm font-medium text-primary">
-        {selectedItem?.label || "Select"}
+        {selectedItem?.label || "Go to"}
       </span>
     </div>
   );

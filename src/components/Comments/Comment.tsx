@@ -55,7 +55,7 @@ const Comment: React.FC<Props> = (props: Props) => {
                 isCommenterOP ? "bg-op" : "bg-secondary"
               }`}
             >
-              {user}
+              {user} {isCommenterOP && "• OP"}
             </span>
             <div className="flex items-center">
               {(isHovered || isMobile) && (
@@ -100,7 +100,7 @@ const Comment: React.FC<Props> = (props: Props) => {
                   isCommenterOP ? "bg-op" : "bg-secondary"
                 }`}
               >
-                {user}
+                {user} {isCommenterOP && "• OP"}
               </span>
               <div className="flex items-center">
                 {(isHovered || isMobile) && (
