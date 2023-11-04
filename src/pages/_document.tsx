@@ -34,13 +34,6 @@ export default function Document() {
           content="#000000"
           media="(prefers-color-scheme: dark)"
         />
-        <script
-          defer
-          type="text/javascript"
-          src="https://api.pirsch.io/pirsch.js"
-          id="pirschjs"
-          data-code="2LpdgTNcPPAxVnMWkXqW9GlAnd45Cnm4"
-        ></script>
       </Head>
       <body className="antialiased bg-primary">
         <Main />
