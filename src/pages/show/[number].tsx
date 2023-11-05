@@ -22,10 +22,12 @@ const ShowStoriesList: NextPage<PageProps> = (props: PageProps) => {
     router.push(`/show/${page}`);
   };
 
+  const title = `Show HN - Page ${number}`
+
   return (
     <Fragment>
       <Head>
-        <title>Show HN - Page {number}</title>
+        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="flex-1">

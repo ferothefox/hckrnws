@@ -22,10 +22,12 @@ const AskStoriesList: NextPage<PageProps> = (props: PageProps) => {
     router.push(`/ask/${page}`);
   };
 
+  const title = `Ask HN - Page ${number}`
+
   return (
     <Fragment>
       <Head>
-        <title>Ask HN - Page {number}</title>
+        <title>{title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="flex-1">
