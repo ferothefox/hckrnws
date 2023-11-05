@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import React from "react";
 import { ThemeProvider } from "next-themes";
 import Header from "~/components/Header";
-import SearchForm from "~/components/SearchForm";
 import { DefaultSeo } from "next-seo";
 import { defaultSEO } from "~/config/seo";
 
