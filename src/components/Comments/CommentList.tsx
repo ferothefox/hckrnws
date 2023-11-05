@@ -15,10 +15,7 @@ const CommentList: React.FC<Props> = (props: Props) => {
     <div className="mt-4">
       {comments.length > 0 ? (
         <Fragment>
-          {/*{comments.map((comment) => (*/}
-          {/*  <Comment key={comment.id} comment={comment} op={op} />*/}
-          {/*))}*/}
-          <For each={comments}>
+          <For each={comments} memo>
             {(comment) => <Comment key={comment.id} comment={comment} op={op} />}
           </For>
         </Fragment>
