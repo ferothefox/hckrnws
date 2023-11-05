@@ -8,7 +8,7 @@ import { defaultSEO } from "~/config/seo";
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
+    <ThemeProvider disableTransitionOnChange>
       <DefaultSeo {...defaultSEO} />
       <div className='loading-animation fixed inset-0 w-full h-full flex justify-center items-center bg-black z-[9999] p-8' tabIndex={-1} aria-hidden="true">
         <svg className='loading-logo flex' width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
