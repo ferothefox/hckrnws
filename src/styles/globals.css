@@ -169,3 +169,38 @@ a {
     /* Chrome 36+, Opera 23+, Firefox 39+ */
       url("/fonts/space_mono/space-mono-v12-latin-regular.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
+
+@keyframes loading {
+  from {
+    pointer-events: all;
+    opacity: 1;
+  }
+
+  to {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+@keyframes loading-logo {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+.loading-animation {
+  animation: loading 0.23s forwards;
+  animation-delay: 0.32s;
+  animation-timing-function: ease-in-out;
+}
+
+.loading-logo {
+  animation: loading-logo 0.23s forwards;
+  animation-delay: 0.32s;
+  animation-timing-function: ease-in-out;
+}

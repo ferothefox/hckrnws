@@ -11,6 +11,7 @@
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "date-fns": "^2.30.0",
+    "framer-motion": "^10.16.4",
     "html-entities": "^2.4.0",
     "million": "^2.6.4",
     "next": "14.0.1",
