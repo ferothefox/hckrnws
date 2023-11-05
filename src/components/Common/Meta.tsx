@@ -1,5 +1,5 @@
 import { prettyTime } from "~/helpers/time";
-
+import { useEffect, useState } from "react";
 import { ClockIcon, CommentIcon, UpvoteIcon } from "~/icons";
 
 type Props = {
@@ -21,6 +21,12 @@ const Meta: React.FC<Props> = ({
   url,
   isDetailedView = false,
 }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+  
   return (
     <div
       className={`flex justify-between w-full ${
