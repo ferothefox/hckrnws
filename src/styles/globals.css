@@ -204,3 +204,28 @@ a {
   animation-delay: 0.32s;
   animation-timing-function: ease-in-out;
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 15px;
+  background-color: transparent;
+  padding-right: 8px
+}
+
+::-webkit-scrollbar-track {
+  background-color: #080808
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background-color: #ffffff2b;
+  background-clip: padding-box
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 5px
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent
+}
