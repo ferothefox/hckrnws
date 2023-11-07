@@ -9,6 +9,7 @@ import {
   SunIcon,
   MoonIcon,
   StarIcon,
+  SearchIcon,
 } from "~/icons";
 import Dropdown from "../Common/Dropdown";
 import { useRouter } from "next/router";
@@ -25,6 +26,7 @@ const Header: React.FC = () => {
   useKeyPress("n", () => router.push("/new/1"));
   useKeyPress("a", () => router.push("/ask/1"));
   useKeyPress("x", () => router.push("/star"));
+  useKeyPress("e", () => router.push("/search"));
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), []);
@@ -71,6 +73,14 @@ const Header: React.FC = () => {
         <StarIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
       ),
       kbd: "X",
+    },
+    {
+      label: "Search",
+      id: "search",
+      icon: (
+        <SearchIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        ),
+      kbd: "E",
     },
   ];
 

@@ -182,6 +182,16 @@ a {
   }
 }
 
+@keyframes fadein-algolia {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes loading {
   from {
     pointer-events: all;
@@ -231,6 +241,12 @@ a {
 .fadein-animation-3 {
   animation: fadein 0.2s both;
   animation-delay: 0.04s;
+  animation-timing-function: ease-in-out;
+}
+
+.fadein-animation-algolia {
+  animation: fadein-algolia 0.2s both;
+  animation-delay: 0.4s;
   animation-timing-function: ease-in-out;
 }
 
