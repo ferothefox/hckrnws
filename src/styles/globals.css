@@ -170,6 +170,18 @@ a {
       url("/fonts/space_mono/space-mono-v12-latin-regular.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
+@keyframes fadein {
+  from {
+    transform: translateY(4px);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
 @keyframes loading {
   from {
     pointer-events: all;
@@ -195,13 +207,30 @@ a {
 
 .loading-animation {
   animation: loading 0.23s forwards;
-  animation-delay: 0.32s;
+  animation-delay: 0.12s;
   animation-timing-function: ease-in-out;
 }
 
 .loading-logo {
   animation: loading-logo 0.23s forwards;
-  animation-delay: 0.32s;
+  animation-delay: 0.12s;
+  animation-timing-function: ease-in-out;
+}
+
+.fadein-animation-1 {
+  animation: fadein 0.2s both;
+  animation-timing-function: ease-in-out;
+}
+
+.fadein-animation-2 {
+  animation: fadein 0.2s both;
+  animation-delay: 0.02s;
+  animation-timing-function: ease-in-out;
+}
+
+.fadein-animation-3 {
+  animation: fadein 0.2s both;
+  animation-delay: 0.04s;
   animation-timing-function: ease-in-out;
 }
 
