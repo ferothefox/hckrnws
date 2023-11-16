@@ -3,6 +3,7 @@ import { TComment } from "~/types/story";
 import { CenteredText } from "../Common/Fragments";
 import { For } from 'million/react';
 import Comment from "./Comment";
+import RenderIfVisible from '../Common/RenderIfVisible';
 
 type Props = {
   comments: TComment[];
@@ -16,7 +17,11 @@ const CommentList: React.FC<Props> = (props: Props) => {
       {comments.length > 0 ? (
         <Fragment>
           <For each={comments} memo>
-            {(comment) => <Comment key={comment.id} comment={comment} op={op} />}
+            {(comment) => (
+              <RenderIfVisible>
+                <Comment key={comment.id} comment={comment} op={op} />
+              </RenderIfVisible>
+            )}
           </For>
         </Fragment>
       ) : (
