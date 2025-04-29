@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@million/lint": "^1.0.14",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-dropdown-menu": "^2.1.12",
     "date-fns": "^4.1.0",
