@@ -70,7 +70,7 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
           url={url}
         />
         <button
-          className="flex mr-2 p-1 w-fit items-center cursor-default rounded border-none hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
+          className="flex mr-2 p-1 w-fit items-center cursor-default rounded-sm border-none hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
           onClick={handleStar}
         >
           <StarIcon

@@ -6,7 +6,6 @@ import { Fragment } from "react";
 import { useRouter } from "next/router";
 import Pagination from "~/components/Common/Pagination";
 import { CenteredText } from "~/components/Common/Fragments";
-import { For } from 'million/react';
 
 const ShowStoriesList: NextPage<PageProps> = (props: PageProps) => {
   const router = useRouter();
@@ -31,9 +30,9 @@ const ShowStoriesList: NextPage<PageProps> = (props: PageProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className="flex-1">
-        <For each={data}>
-          {(story) => <StoryListItem story={story} key={story.id} /> }
-        </For>
+        {data.map((story) => (
+          <StoryListItem story={story} key={story.id} />
+        ))}
         <Pagination
           currentPage={parseInt(number as string)}
           onChangePage={handlePageChange}

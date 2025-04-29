@@ -118,7 +118,7 @@ const Header: React.FC = () => {
           handleOnClick={handleOnClick}
         />
         <button
-          className="p-1.5 border border-primary bg-secondary ml-2 hover:bg-tertiary duration-150 cursor-default rounded focus-visible:ring-1 focus-visible:ring-blue-500"
+          className="p-1.5 border border-primary bg-secondary ml-2 hover:bg-tertiary duration-150 cursor-default rounded-sm focus-visible:ring-1 focus-visible:ring-blue-500"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           type="button"
           aria-label="Toggle Theme"

@@ -88,7 +88,7 @@ const Story: NextPage<Props> = (props: Props) => {
       </Head>
       <div className="flex flex-col flex-1 mb-8">
         <button
-          className="px-2 py-1 bg-transparent rounded flex items-center mb-2 w-fit group hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
+          className="px-2 py-1 bg-transparent rounded-sm flex items-center mb-2 w-fit group hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
           onClick={onClickBack}
         >
           <BackIcon className="w-3 h-3 text-icon group-hover:text-primary" />
@@ -96,7 +96,7 @@ const Story: NextPage<Props> = (props: Props) => {
             Back
           </span>
         </button>
-        <div className="flex flex-col p-4 bg-primary border border-primary rounded">
+        <div className="flex flex-col p-4 bg-primary border border-primary rounded-sm">
           <h2 className="text-lg md:text-xl font-medium text-primary m-0 mb-1 font-sans">
             {decode(title)}
           </h2>
@@ -125,7 +125,7 @@ const Story: NextPage<Props> = (props: Props) => {
               by <span className="font-semibold text-primary">{user}</span>
             </p>
             <button
-              className="flex mr-2 p-1 w-fit items-center cursor-default rounded border-none hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
+              className="flex mr-2 p-1 w-fit items-center cursor-default rounded-sm border-none hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
               onClick={handleStar}
             >
               <StarIcon

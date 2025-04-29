@@ -70,7 +70,7 @@ const Comment: React.FC<Props> = (props: Props) => {
                   <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
                 </button>
               )}
-              <span className="py-0.5 px-1.5 text-secondary font-mono bg-tertiary rounded text-[10px]">
+              <span className="py-0.5 px-1.5 text-secondary font-mono bg-tertiary rounded-sm text-[10px]">
                 {comments_count}
               </span>
               <button
