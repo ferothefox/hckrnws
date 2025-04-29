@@ -1,17 +1,6 @@
-import million from 'million/compiler';
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  swcMinify: true,
   reactStrictMode: true,
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
-
-    return config;
-  },
   async redirects() {
     return [
       {
@@ -28,8 +17,4 @@ const nextConfig = {
   },
 };
 
-const millionConfig = {
-  auto: true,
-}
-
-export default million.next(nextConfig, millionConfig);
+export default nextConfig;
