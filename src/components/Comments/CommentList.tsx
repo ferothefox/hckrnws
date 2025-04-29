@@ -16,9 +16,7 @@ const CommentList: React.FC<Props> = (props: Props) => {
       {comments.length > 0 ? (
         <Fragment>
           {comments.map((comment) => (
-            <RenderIfVisible key={comment.id}>
-              <Comment comment={comment} op={op} />
-            </RenderIfVisible>
+            <Comment comment={comment} op={op} />
           ))}
         </Fragment>
       ) : (
