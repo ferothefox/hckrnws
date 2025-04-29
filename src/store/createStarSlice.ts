@@ -7,12 +7,8 @@ export interface StarSlice {
   starStory: (starred: TBaseStory[]) => void;
 }
 
-interface IStore extends StarSlice {}
-
-const createStarSlice: StateCreator<IStore, [], [], StarSlice> = (
-  set,
-  get,
-  api
+const createStarSlice: StateCreator<StarSlice, [], [], StarSlice> = (
+  set
 ): StarSlice => ({
   starred: getLocalStorage("starred", []),
   starStory: (starred) => {

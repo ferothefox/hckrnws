@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { TComment } from "~/types/story";
 import { CenteredText } from "../Common/Fragments";
 import Comment from "./Comment";
-import RenderIfVisible from "../Common/RenderIfVisible";
 
 type Props = {
   comments: TComment[];
@@ -16,7 +15,7 @@ const CommentList: React.FC<Props> = (props: Props) => {
       {comments.length > 0 ? (
         <Fragment>
           {comments.map((comment) => (
-            <Comment comment={comment} op={op} />
+            <Comment key={comment.id} comment={comment} op={op} />
           ))}
         </Fragment>
       ) : (

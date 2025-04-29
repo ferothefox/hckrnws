@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { TBaseStory } from "~/types/story";
 import Meta from "~/components/Common/Meta";
-import useWindowSize from "~/hooks/useWindowSize";
-import { Size } from "~/types/size";
 import useStore from "~/store/useStore";
 import { decode } from "html-entities";
 import { useEffect, useState } from "react";
@@ -19,7 +17,6 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
   } = props;
   const [isStoryStarred, setIsStoryStarred] = useState(false);
 
-  const size: Size = useWindowSize();
   const starStory = useStore((state) => state.starStory);
   const starred = useStore((state) => state.starred);
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface IKey {
   key: string;
@@ -10,19 +10,28 @@ export function useKeyPress(
 ): boolean {
   // State for keeping track of whether key is pressed
   const [keyPressed, setKeyPressed] = useState(false);
+
   // If pressed key is our target key then set to true
-  function downHandler({ key }: IKey): void {
-    if (key === targetKey) {
-      setKeyPressed(true);
-    }
-  }
+  const downHandler = useCallback(
+    ({ key }: IKey): void => {
+      if (key === targetKey) {
+        setKeyPressed(true);
+      }
+    },
+    [targetKey]
+  );
+
   // If released key is our target key then set to false
-  const upHandler = ({ key }: IKey): void => {
-    if (key === targetKey) {
-      setKeyPressed(false);
-      handlePress();
-    }
-  };
+  const upHandler = useCallback(
+    ({ key }: IKey): void => {
+      if (key === targetKey) {
+        setKeyPressed(false);
+        handlePress();
+      }
+    },
+    [targetKey, handlePress]
+  );
+
   // Add event listeners
   useEffect(() => {
     window.addEventListener("keydown", downHandler);
@@ -32,6 +41,7 @@ export function useKeyPress(
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);
     };
-  }, [targetKey]); // Empty array ensures that effect is only run on mount and unmount
+  }, [downHandler, upHandler]); // Now only depends on the memoized handlers
+
   return keyPressed;
 }

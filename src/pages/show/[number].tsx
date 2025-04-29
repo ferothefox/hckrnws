@@ -21,7 +21,7 @@ const ShowStoriesList: NextPage<PageProps> = (props: PageProps) => {
     router.push(`/show/${page}`);
   };
 
-  const title = `Show HN - Page ${number}`
+  const title = `Show HN - Page ${number}`;
 
   return (
     <Fragment>

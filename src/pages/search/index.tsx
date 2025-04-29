@@ -1,9 +1,7 @@
-import SearchForm from '~/components/Common/SearchInput'
+import SearchForm from "~/components/Common/SearchInput";
 
 const Search = () => {
-  return (
-      <SearchForm />
-    );
+  return <SearchForm />;
 };
 
 export default Search;

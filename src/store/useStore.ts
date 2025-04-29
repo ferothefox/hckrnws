@@ -2,9 +2,7 @@ import { create } from "zustand";
 
 import createStarSlice, { StarSlice } from "./createStarSlice";
 
-interface IStore extends StarSlice {}
-
-const useStore = create<IStore>()((set, get, api) => ({
+const useStore = create<StarSlice>()((set, get, api) => ({
   ...createStarSlice(set, get, api),
 }));
 

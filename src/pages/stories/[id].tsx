@@ -7,9 +7,6 @@ import Head from "next/head";
 import Meta from "~/components/Common/Meta";
 import CommentList from "~/components/Comments/CommentList";
 import { BackIcon, StarIcon } from "~/icons";
-import { useTheme } from "next-themes";
-import { Size } from "~/types/size";
-import useWindowSize from "~/hooks/useWindowSize";
 import useStore from "~/store/useStore";
 import { decode } from "html-entities";
 import InnerHTMLText from "~/components/Common/InnerHTMLText";
@@ -21,16 +18,11 @@ type Props = {
 
 const Story: NextPage<Props> = (props: Props) => {
   const router = useRouter();
-  const { data, errorCode } = props;
+  const { data } = props;
   const [isStoryStarred, setIsStoryStarred] = useState(false);
-
-  const size: Size = useWindowSize();
 
   const starStory = useStore((state) => state.starStory);
   const starred = useStore((state) => state.starred);
-
-  const { theme } = useTheme();
-  const stroke = theme === "light" ? "#161618" : "#FFFFFF";
 
   // if (errorCode)
   //   return <CenteredText>Oops! Something went wrong :(</CenteredText>;
@@ -75,7 +67,7 @@ const Story: NextPage<Props> = (props: Props) => {
     setIsStoryStarred(starred?.some((story) => story.id === id));
   }, [starred, id]);
 
-  const pageTitle: string = `${decode(title)} - hckrnws`
+  const pageTitle: string = `${decode(title)} - hckrnws`;
 
   return (
     <Fragment>

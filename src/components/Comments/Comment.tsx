@@ -1,5 +1,5 @@
 import { prettyTime } from "~/helpers/time";
-import { Fragment, RefObject, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { TComment } from "~/types/story";
 import { ChevronDownIcon, ChevronUpIcon, ClipboardIcon } from "~/icons";
 import { contains } from "~/helpers/contains";
@@ -28,7 +28,7 @@ const Comment: React.FC<Props> = (props: Props) => {
     op,
   } = props;
   const isCommenterOP = user === op;
-  const [collapsed, setCollapsed] = useState<Boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
 

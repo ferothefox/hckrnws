@@ -21,7 +21,7 @@ const AskStoriesList: NextPage<PageProps> = (props: PageProps) => {
     router.push(`/ask/${page}`);
   };
 
-  const title = `Ask HN - Page ${number}`
+  const title = `Ask HN - Page ${number}`;
 
   return (
     <Fragment>

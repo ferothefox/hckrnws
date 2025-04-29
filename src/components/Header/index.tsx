@@ -79,7 +79,7 @@ const Header: React.FC = () => {
       id: "search",
       icon: (
         <SearchIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
-        ),
+      ),
       kbd: "E",
     },
   ];

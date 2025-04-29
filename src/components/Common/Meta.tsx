@@ -16,9 +16,6 @@ const Meta: React.FC<Props> = ({
   points,
   comments,
   time,
-  id,
-  user,
-  url,
   isDetailedView = false,
 }) => {
   const [mounted, setMounted] = useState(false);
@@ -30,7 +27,7 @@ const Meta: React.FC<Props> = ({
       isDetailedView ? "h-[24px]" : "h-[28px]"
     }`}></div>
   );
-  
+
   return (
     <div
       className={`flex justify-between w-full ${

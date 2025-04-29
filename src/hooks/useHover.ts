@@ -1,16 +1,16 @@
 import { RefObject, useEffect, useRef, useState } from "react";
 
-export function useHover<T>(): [RefObject<T>, boolean] {
+export function useHover<T extends Element>(): [RefObject<T | null>, boolean] {
   const [value, setValue] = useState<boolean>(false);
 
-  const ref: any = useRef<T | null>(null);
+  const ref = useRef<T | null>(null);
 
   const handleMouseOver = (): void => setValue(true);
   const handleMouseOut = (): void => setValue(false);
 
   useEffect(
     () => {
-      const node: any = ref.current;
+      const node = ref.current;
       if (node) {
         node.addEventListener("mouseover", handleMouseOver);
         node.addEventListener("mouseout", handleMouseOut);
@@ -21,7 +21,7 @@ export function useHover<T>(): [RefObject<T>, boolean] {
         };
       }
     },
-    [ref.current] // Recall only if ref changes
+    [] // Recall only if ref changes
   );
 
   return [ref, value];
