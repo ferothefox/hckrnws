@@ -49,9 +49,6 @@ const Story: NextPage<Props> = (props: Props) => {
     url = url.replace("item?id=", "");
   }
 
-  // Assigning a number greater than the compared value, so that it defaults to false
-  const isMobile = (size?.width ?? 641) < 640;
-
   const story = {
     id,
     title,
