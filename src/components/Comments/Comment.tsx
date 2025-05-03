@@ -4,9 +4,6 @@ import { TComment } from "~/types/story";
 import { ChevronDownIcon, ChevronUpIcon, ClipboardIcon } from "~/icons";
 import { contains } from "~/helpers/contains";
 import InnerHTMLText from "~/components/Common/InnerHTMLText";
-import { Size } from "~/types/size";
-import useWindowSize from "~/hooks/useWindowSize";
-import { useHover } from "~/hooks/useHover";
 
 type Props = {
   comment: TComment;
@@ -30,21 +27,16 @@ const Comment: React.FC<Props> = (props: Props) => {
   const isCommenterOP = user === op;
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
-
   // find quotes and apply styles
   useEffect(() => {
     contains("p", ">", "quotes");
   }, []);
 
-  const size: Size = useWindowSize();
-  const isMobile = (size?.width ?? 641) < 640;
-
-  const margin = isMobile ? 8 : 16;
+  const margin = 16;
 
   if (collapsed)
     return (
-      <div className="flex" ref={hoverRef}>
+      <div className="flex">
         <section
           className={`pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2 border-primary`}
           style={{ marginLeft: `calc(${margin}px * ${level})` }}
@@ -58,18 +50,16 @@ const Comment: React.FC<Props> = (props: Props) => {
               {user} {isCommenterOP && "• OP"}
             </span>
             <div className="flex items-center">
-              {(isHovered || isMobile) && (
-                <button
-                  className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
-                    );
-                  }}
-                >
-                  <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
-                </button>
-              )}
+              <button
+                className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
+                  );
+                }}
+              >
+                <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
+              </button>
               <span className="py-0.5 px-1.5 text-secondary font-mono bg-tertiary rounded-sm text-[10px]">
                 {comments_count}
               </span>
@@ -87,8 +77,7 @@ const Comment: React.FC<Props> = (props: Props) => {
 
   return (
     <Fragment>
-      {/* Indent the children based on the level */}
-      <div style={{ display: "flex" }} ref={hoverRef}>
+      <div style={{ display: "flex" }}>
         <section
           className={`pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2  border-primary`}
           style={{ marginLeft: `calc(${margin}px * ${level})` }}
@@ -103,18 +92,16 @@ const Comment: React.FC<Props> = (props: Props) => {
                 {user} {isCommenterOP && "• OP"}
               </span>
               <div className="flex items-center">
-                {(isHovered || isMobile) && (
-                  <button
-                    className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
-                      );
-                    }}
-                  >
-                    <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
-                  </button>
-                )}
+                <button
+                  className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
+                    );
+                  }}
+                >
+                  <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
+                </button>
                 <span className="text-secondary font-mono text-[10px]">
                   {prettyTime(time)}
                 </span>
@@ -135,7 +122,6 @@ const Comment: React.FC<Props> = (props: Props) => {
             <InnerHTMLText content={content} />
           )}
         </section>
-        {/* // Recursively call the same component for children comments */}
       </div>
       {comments?.map((comment) => (
         <Comment key={comment.id} comment={comment} op={op} />
