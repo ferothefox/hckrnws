@@ -29,7 +29,7 @@ const Story: NextPage<Props> = (props: Props) => {
 
   // if (!data) return <CenteredText>Loading...</CenteredText>;
 
-  const { title, id, points, user, time, content, comments, domain } = data;
+  const { title, id, points, user, time, content, comments, domain, comments_count } = data; // Added comments_count
   let { url } = data;
 
   const onClickBack = () => {
@@ -49,7 +49,7 @@ const Story: NextPage<Props> = (props: Props) => {
     time,
     url,
     domain,
-    comments_count: comments.length,
+    comments_count: comments_count, // Use comments_count here too
   };
 
   const handleStar = () => {
@@ -105,7 +105,7 @@ const Story: NextPage<Props> = (props: Props) => {
               points={points}
               user={user}
               isDetailedView
-              comments={comments.length}
+              comments={comments_count} // Use comments_count instead of comments.length
               url={url}
             />
           </div>

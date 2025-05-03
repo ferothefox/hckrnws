@@ -21,6 +21,7 @@ export type TDetailedStory = {
   type: string;
   content: string;
   comments: TComment[];
+  comments_count: number;
   url: string;
   domain: string;
 };
