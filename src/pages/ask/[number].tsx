@@ -36,7 +36,7 @@ const AskStoriesList: NextPage<PageProps> = (props: PageProps) => {
         <Pagination
           currentPage={parseInt(number as string)}
           onChangePage={handlePageChange}
-          totalPages={2}
+          totalPages={1}
         />
       </div>
     </Fragment>
@@ -67,7 +67,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // Get the paths we want to pre-render based on posts
-  const paths = [...Array(2)].map((x, idx) => ({
+  const paths = [...Array(1)].map((x, idx) => ({
     params: { number: (idx + 1).toString() },
   }));
 
