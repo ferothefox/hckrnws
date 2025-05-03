@@ -106,7 +106,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between py-3 flex-none">
+    <div className="flex select-none justify-between items-center h-16 flex-none">
       <Link href="/top/1">
         <h2 className="text-xl md:text-2xl font-mono text-primary">hckrnws</h2>
       </Link>
