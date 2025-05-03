@@ -19,7 +19,7 @@ const CommentList: React.FC<Props> = (props: Props) => {
           ))}
         </Fragment>
       ) : (
-        <CenteredText>No comments posted yet!</CenteredText>
+        <CenteredText>No comments posted yet</CenteredText>
       )}
     </div>
   );
