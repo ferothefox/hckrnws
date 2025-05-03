@@ -24,11 +24,9 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
     setIsStoryStarred(starred?.some((story) => story.id === id));
   }, [starred, id]);
 
-  // To hide the job posting's that have no discussions around them
   if (!user) return null;
 
   const handleStar = () => {
-    // save them to the zustand store, which in turn will save to local storage
     const isStoryStarred = starred?.some((story) => story.id === id);
     if (isStoryStarred) {
       const filteredStories = starred?.filter((story) => story.id !== id);
