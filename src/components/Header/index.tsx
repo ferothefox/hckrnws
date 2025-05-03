@@ -98,7 +98,7 @@ const Header: React.FC = () => {
   );
 
   const handleOnClick = (id: string) => {
-    if (id === "star") {
+    if (id === "star" || id === "search") {
       router.push(`/${id}`);
     } else {
       router.push(`/${id}/1`);
