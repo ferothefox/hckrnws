@@ -24,11 +24,6 @@ const Story: NextPage<Props> = (props: Props) => {
   const starStory = useStore((state) => state.starStory);
   const starred = useStore((state) => state.starred);
 
-  // if (errorCode)
-  //   return <CenteredText>Oops! Something went wrong :(</CenteredText>;
-
-  // if (!data) return <CenteredText>Loading...</CenteredText>;
-
   const {
     title,
     id,
@@ -39,14 +34,13 @@ const Story: NextPage<Props> = (props: Props) => {
     comments,
     domain,
     comments_count,
-  } = data; // Added comments_count
+  } = data;
   let { url } = data;
 
   const onClickBack = () => {
     router.back();
   };
 
-  // If url links to a hackernews story, remove the params, so that it can route inside hckrnws
   if (url.startsWith("item?id=")) {
     url = url.replace("item?id=", "");
   }
@@ -59,7 +53,7 @@ const Story: NextPage<Props> = (props: Props) => {
     time,
     url,
     domain,
-    comments_count: comments_count, // Use comments_count here too
+    comments_count: comments_count,
   };
 
   const handleStar = () => {
