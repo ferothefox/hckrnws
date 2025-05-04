@@ -29,7 +29,17 @@ const Story: NextPage<Props> = (props: Props) => {
 
   // if (!data) return <CenteredText>Loading...</CenteredText>;
 
-  const { title, id, points, user, time, content, comments, domain, comments_count } = data; // Added comments_count
+  const {
+    title,
+    id,
+    points,
+    user,
+    time,
+    content,
+    comments,
+    domain,
+    comments_count,
+  } = data; // Added comments_count
   let { url } = data;
 
   const onClickBack = () => {
@@ -144,7 +154,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const response = await fetch(fetchUrl);
   const errorCode = response.ok ? false : response.status;
-  // Only run the json if the error is not present
   const data = errorCode === false ? await response.json() : [];
 
   return {
