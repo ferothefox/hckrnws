@@ -36,7 +36,7 @@ const Comment: React.FC<Props> = memo((props: Props) => {
     op,
   } = props;
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLLIElement>(null);
 
   const isCommenterOP = useMemo(() => user === op, [user, op]);
 
@@ -94,13 +94,13 @@ const Comment: React.FC<Props> = memo((props: Props) => {
 
   if (collapsed) {
     return (
-      <div className="flex">
-        <section className={sectionClassName} style={commentStyles}>
+      <div data-comment="" data-collapsed="true" style={{ display: "flex" }}>
+        <li className={sectionClassName} style={commentStyles}>
           <div className="flex justify-between">
             {userBadge}
             <div className="flex items-center">
               <button
-                className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                className="py-1 px-3 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
                 onClick={handleCopyLink}
               >
                 <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
@@ -109,41 +109,37 @@ const Comment: React.FC<Props> = memo((props: Props) => {
                 {comments_count}
               </span>
               <button
-                className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                className="py-1 px-3 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
                 onClick={handleExpand}
               >
                 <ChevronDownIcon className="h-3 w-3 text-icon group-hover:text-primary" />
               </button>
             </div>
           </div>
-        </section>
+        </li>
       </div>
     );
   }
 
   return (
     <Fragment>
-      <div style={{ display: "flex" }}>
-        <section
-          className={sectionClassName}
-          style={commentStyles}
-          ref={contentRef}
-        >
+      <div data-comment="" data-collapsed="false" style={{ display: "flex" }}>
+        <li className={sectionClassName} style={commentStyles} ref={contentRef}>
           {!deleted && (
             <div className="flex justify-between mb-2">
               {userBadge}
               <div className="flex items-center">
                 <button
-                  className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                  className="py-1 px-3 group focus-visible:ring-1 focus-visible:ring-blue-500"
                   onClick={handleCopyLink}
                 >
-                  <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
+                  <ClipboardIcon className="h-3 w-3 text-icon group-hover:text-primary" />
                 </button>
-                <span className="text-secondary font-mono text-[10px]">
+                <span className="text-secondary select-none font-mono text-[10px]">
                   {prettyTime(time)}
                 </span>
                 <button
-                  className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
+                  className="py-1 px-3 group focus-visible:ring-1 focus-visible:ring-blue-500"
                   onClick={handleCollapse}
                 >
                   <ChevronUpIcon className="h-3 w-3 text-icon group-hover:text-primary" />
@@ -152,17 +148,14 @@ const Comment: React.FC<Props> = memo((props: Props) => {
             </div>
           )}
           {deleted ? (
-            <p className="font-mono text-secondary text-sm">
-              Comment was deleted :(
-            </p>
+            <p className="font-mono text-secondary text-sm">[deleted]</p>
           ) : (
-            // Use a key to force re-render when uncollapsed
             <InnerHTMLText
               key={`content-${wasUncollapsed ? "uncollapsed" : "normal"}`}
               content={content}
             />
           )}
-        </section>
+        </li>
       </div>
       {childComments}
     </Fragment>
