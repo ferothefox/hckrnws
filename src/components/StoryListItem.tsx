@@ -5,6 +5,7 @@ import useStore from "~/store/useStore";
 import { decode } from "html-entities";
 import { useEffect, useState } from "react";
 import { StarIcon } from "~/icons";
+import { Tooltip } from "radix-ui";
 
 type Props = {
   story: TBaseStory;
@@ -46,14 +47,25 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
         </h3>
       </Link>
       {domain && (
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-xs whitespace-nowrap font-normal mb-0.5 border-b hover:text-primary border-primary w-fit font-mono text-secondary mt-0.5 focus-visible:ring-1 focus-visible:ring-blue-500"
-        >
-          ({domain})
-        </a>
+        <Tooltip.Root delayDuration={50}>
+          <Tooltip.Trigger asChild>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs whitespace-nowrap font-normal mb-0.5 border-b hover:text-primary border-primary w-fit font-mono text-secondary mt-0.5 focus-visible:ring-1 focus-visible:ring-blue-500"
+            >
+              ({domain})
+            </a>
+          </Tooltip.Trigger>
+          <Tooltip.Content
+            side="right"
+            sideOffset={8}
+            className="text-xs z-50 border p-1 rounded-md border-primary bg-secondary whitespace-nowrap font-normal mb-0.5 border-b w-fit font-mono text-secondary"
+          >
+            {url}
+          </Tooltip.Content>
+        </Tooltip.Root>
       )}
       <div className="flex items-center justify-between">
         <Meta

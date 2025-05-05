@@ -11,6 +11,7 @@ import useStore from "~/store/useStore";
 import { decode } from "html-entities";
 import InnerHTMLText from "~/components/Common/InnerHTMLText";
 import { useKeyPress } from "~/hooks/useKeyPress";
+import { Tooltip } from "radix-ui";
 
 type Props = {
   data: TDetailedStory;
@@ -106,14 +107,25 @@ const Story: NextPage<Props> = (props: Props) => {
           </h2>
           <div className="flex items-center">
             {domain && (
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs mr-3  max-w-[128px] md:max-w-full truncate md:whitespace-normal md:overflow-visible font-normal mb-0.5 border-b hover:text-primary border-primary w-fit font-mono text-secondary mt-0.5"
-              >
-                ({domain})
-              </a>
+              <Tooltip.Root delayDuration={50}>
+                <Tooltip.Trigger asChild>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs mr-3  max-w-[128px] md:max-w-full truncate md:whitespace-normal md:overflow-visible font-normal mb-0.5 border-b hover:text-primary border-primary w-fit font-mono text-secondary mt-0.5 focus-visible:ring-1 focus-visible:ring-blue-500"
+                  >
+                    ({domain})
+                  </a>
+                </Tooltip.Trigger>
+                <Tooltip.Content
+                  side="right"
+                  sideOffset={8}
+                  className="text-xs z-50 border p-1 rounded-md border-primary bg-secondary whitespace-nowrap font-normal mb-0.5 border-b w-fit font-mono text-secondary"
+                >
+                  {url}
+                </Tooltip.Content>
+              </Tooltip.Root>
             )}
             <Meta
               time={time}
