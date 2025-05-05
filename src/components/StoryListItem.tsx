@@ -37,7 +37,7 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <div className="py-2 flex flex-col w-full bg-transparent mb-2 duration-100 border-b border-primary hover:border-secondary">
+    <div className="py-2 flex flex-col w-full bg-transparent duration-100 border-b border-primary">
       <Link href={`/stories/${id}`} passHref>
         <h3
           className={`text-base text-secondary whitespace-pre-line font-medium duration-100 cursor-default font-sans hover:text-primary`}

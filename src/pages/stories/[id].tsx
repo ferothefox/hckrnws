@@ -10,6 +10,7 @@ import { BackIcon, StarIcon } from "~/icons";
 import useStore from "~/store/useStore";
 import { decode } from "html-entities";
 import InnerHTMLText from "~/components/Common/InnerHTMLText";
+import { useKeyPress } from "~/hooks/useKeyPress";
 
 type Props = {
   data: TDetailedStory;
@@ -40,6 +41,8 @@ const Story: NextPage<Props> = (props: Props) => {
   const onClickBack = useCallback(() => {
     router.back();
   }, [router]);
+
+  useKeyPress("Escape", onClickBack);
 
   if (url.startsWith("item?id=")) {
     url = url.replace("item?id=", "");
