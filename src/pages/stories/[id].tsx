@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from "next";
 
 import { useRouter } from "next/router";
 import { TDetailedStory } from "~/types/story";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useMemo, useCallback } from "react";
 import Head from "next/head";
 import Meta from "~/components/Common/Meta";
 import CommentList from "~/components/Comments/CommentList";
@@ -37,26 +37,29 @@ const Story: NextPage<Props> = (props: Props) => {
   } = data;
   let { url } = data;
 
-  const onClickBack = () => {
+  const onClickBack = useCallback(() => {
     router.back();
-  };
+  }, [router]);
 
   if (url.startsWith("item?id=")) {
     url = url.replace("item?id=", "");
   }
 
-  const story = {
-    id,
-    title,
-    points,
-    user,
-    time,
-    url,
-    domain,
-    comments_count: comments_count,
-  };
+  const story = useMemo(
+    () => ({
+      id,
+      title,
+      points,
+      user,
+      time,
+      url,
+      domain,
+      comments_count: comments_count,
+    }),
+    [id, title, points, user, time, url, domain, comments_count],
+  );
 
-  const handleStar = () => {
+  const handleStar = useCallback(() => {
     // save them to the zustand store, which in turn will save to local storage
     const isStoryStarred = starred?.some((story) => story.id === id);
     if (isStoryStarred) {
@@ -65,13 +68,18 @@ const Story: NextPage<Props> = (props: Props) => {
     } else {
       starStory([...starred, story]);
     }
-  };
+  }, [starred, story, id, starStory]);
 
   useEffect(() => {
     setIsStoryStarred(starred?.some((story) => story.id === id));
   }, [starred, id]);
 
-  const pageTitle: string = `${decode(title)} - hckrnws`;
+  const pageTitle = useMemo(() => `${decode(title)} - hckrnws`, [title]);
+
+  const commentsSection = useMemo(
+    () => <CommentList comments={comments} op={user} />,
+    [comments, user],
+  );
 
   return (
     <Fragment>
@@ -133,7 +141,7 @@ const Story: NextPage<Props> = (props: Props) => {
           </div>
           {content && <InnerHTMLText content={content} isDescription />}
         </div>
-        <CommentList comments={comments} op={user} />
+        {commentsSection}
       </div>
     </Fragment>
   );

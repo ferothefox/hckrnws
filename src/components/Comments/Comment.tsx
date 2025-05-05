@@ -1,8 +1,15 @@
 import { prettyTime } from "~/helpers/time";
-import { Fragment, useEffect, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  memo,
+  useState,
+  useRef,
+} from "react";
 import { TComment } from "~/types/story";
 import { ChevronDownIcon, ChevronUpIcon, ClipboardIcon } from "~/icons";
-import { contains } from "~/helpers/contains";
 import InnerHTMLText from "~/components/Common/InnerHTMLText";
 
 type Props = {
@@ -10,7 +17,11 @@ type Props = {
   op: string;
 };
 
-const Comment: React.FC<Props> = (props: Props) => {
+const getCommentStyles = (level: number, margin: number) => ({
+  marginLeft: `calc(${margin}px * ${level})`,
+});
+
+const Comment: React.FC<Props> = memo((props: Props) => {
   const {
     comment: {
       user,
@@ -24,39 +35,73 @@ const Comment: React.FC<Props> = (props: Props) => {
     },
     op,
   } = props;
-  const isCommenterOP = user === op;
+
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const isCommenterOP = useMemo(() => user === op, [user, op]);
+
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  // find quotes and apply styles
+  const [wasUncollapsed, setWasUncollapsed] = useState<boolean>(false);
+
   useEffect(() => {
-    contains("p", ">", "quotes");
-  }, []);
+    if (contentRef.current && !deleted && wasUncollapsed) {
+      setWasUncollapsed(false);
+    }
+  }, [content, deleted, wasUncollapsed]);
 
   const margin = 16;
+  const commentStyles = useMemo(() => getCommentStyles(level, margin), [level]);
 
-  if (collapsed)
+  const handleCollapse = useCallback(() => setCollapsed(true), []);
+
+  const handleExpand = useCallback(() => {
+    setCollapsed(false);
+    setWasUncollapsed(true);
+  }, []);
+
+  const handleCopyLink = useCallback(() => {
+    navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`,
+    );
+  }, [id]);
+
+  const userBadge = useMemo(
+    () => (
+      <span
+        className={`text-xs text-secondary font-mono py-1 px-2 rounded flex items-center ${
+          isCommenterOP ? "bg-op" : "bg-secondary"
+        }`}
+      >
+        {user} {isCommenterOP && "• OP"}
+      </span>
+    ),
+    [user, isCommenterOP],
+  );
+
+  const sectionClassName = useMemo(
+    () =>
+      `pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2 border-primary`,
+    [],
+  );
+
+  const childComments = useMemo(() => {
+    if (!comments?.length) return null;
+    return comments.map((comment) => (
+      <Comment key={comment.id} comment={comment} op={op} />
+    ));
+  }, [comments, op]);
+
+  if (collapsed) {
     return (
       <div className="flex">
-        <section
-          className={`pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2 border-primary`}
-          style={{ marginLeft: `calc(${margin}px * ${level})` }}
-        >
+        <section className={sectionClassName} style={commentStyles}>
           <div className="flex justify-between">
-            <span
-              className={`text-xs text-secondary font-mono py-1 px-2 rounded flex items-center ${
-                isCommenterOP ? "bg-op" : "bg-secondary"
-              }`}
-            >
-              {user} {isCommenterOP && "• OP"}
-            </span>
+            {userBadge}
             <div className="flex items-center">
               <button
                 className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                onClick={() => {
-                  navigator.clipboard.writeText(
-                    `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
-                  );
-                }}
+                onClick={handleCopyLink}
               >
                 <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
               </button>
@@ -65,7 +110,7 @@ const Comment: React.FC<Props> = (props: Props) => {
               </span>
               <button
                 className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                onClick={() => setCollapsed(false)}
+                onClick={handleExpand}
               >
                 <ChevronDownIcon className="h-3 w-3 text-icon group-hover:text-primary" />
               </button>
@@ -74,31 +119,23 @@ const Comment: React.FC<Props> = (props: Props) => {
         </section>
       </div>
     );
+  }
 
   return (
     <Fragment>
       <div style={{ display: "flex" }}>
         <section
-          className={`pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2  border-primary`}
-          style={{ marginLeft: `calc(${margin}px * ${level})` }}
+          className={sectionClassName}
+          style={commentStyles}
+          ref={contentRef}
         >
           {!deleted && (
             <div className="flex justify-between mb-2">
-              <span
-                className={`text-xs text-secondary font-mono py-1 px-2 rounded flex items-center ${
-                  isCommenterOP ? "bg-op" : "bg-secondary"
-                }`}
-              >
-                {user} {isCommenterOP && "• OP"}
-              </span>
+              {userBadge}
               <div className="flex items-center">
                 <button
                   className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`
-                    );
-                  }}
+                  onClick={handleCopyLink}
                 >
                   <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
                 </button>
@@ -107,7 +144,7 @@ const Comment: React.FC<Props> = (props: Props) => {
                 </span>
                 <button
                   className="p-1 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={() => setCollapsed(true)}
+                  onClick={handleCollapse}
                 >
                   <ChevronUpIcon className="h-3 w-3 text-icon group-hover:text-primary" />
                 </button>
@@ -119,15 +156,19 @@ const Comment: React.FC<Props> = (props: Props) => {
               Comment was deleted :(
             </p>
           ) : (
-            <InnerHTMLText content={content} />
+            // Use a key to force re-render when uncollapsed
+            <InnerHTMLText
+              key={`content-${wasUncollapsed ? "uncollapsed" : "normal"}`}
+              content={content}
+            />
           )}
         </section>
       </div>
-      {comments?.map((comment) => (
-        <Comment key={comment.id} comment={comment} op={op} />
-      ))}
+      {childComments}
     </Fragment>
   );
-};
+});
+
+Comment.displayName = "Comment";
 
 export default Comment;
