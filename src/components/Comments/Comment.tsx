@@ -36,22 +36,8 @@ const Comment: React.FC<Props> = memo((props: Props) => {
     op,
   } = props;
 
-  const contentRef = useRef<HTMLLIElement>(null);
-
-  const isCommenterOP = useMemo(() => user === op, [user, op]);
-
   const [collapsed, setCollapsed] = useState<boolean>(false);
-
   const [wasUncollapsed, setWasUncollapsed] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (contentRef.current && !deleted && wasUncollapsed) {
-      setWasUncollapsed(false);
-    }
-  }, [content, deleted, wasUncollapsed]);
-
-  const margin = 16;
-  const commentStyles = useMemo(() => getCommentStyles(level, margin), [level]);
 
   const handleCollapse = useCallback(() => setCollapsed(true), []);
 
@@ -59,6 +45,18 @@ const Comment: React.FC<Props> = memo((props: Props) => {
     setCollapsed(false);
     setWasUncollapsed(true);
   }, []);
+
+  useEffect(() => {
+    if (contentRef.current && !deleted && wasUncollapsed) {
+      setWasUncollapsed(false);
+    }
+  }, [content, deleted, wasUncollapsed]);
+
+  const contentRef = useRef<HTMLLIElement>(null);
+  const isCommenterOP = useMemo(() => user === op, [user, op]);
+
+  const margin = 16;
+  const commentStyles = useMemo(() => getCommentStyles(level, margin), [level]);
 
   const handleCopyLink = useCallback(() => {
     navigator.clipboard.writeText(
