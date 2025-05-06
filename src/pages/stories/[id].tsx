@@ -60,7 +60,7 @@ const Story: NextPage<Props> = (props: Props) => {
       domain,
       comments_count: comments_count,
     }),
-    [id, title, points, user, time, url, domain, comments_count],
+    [id, title, points, user, time, url, domain, comments_count]
   );
 
   const handleStar = useCallback(() => {
@@ -82,7 +82,7 @@ const Story: NextPage<Props> = (props: Props) => {
 
   const commentsSection = useMemo(
     () => <CommentList comments={comments} op={user} />,
-    [comments, user],
+    [comments, user]
   );
 
   return (
@@ -105,7 +105,7 @@ const Story: NextPage<Props> = (props: Props) => {
           <h2 className="text-lg md:text-xl font-medium text-primary m-0 mb-1 font-sans">
             {decode(title)}
           </h2>
-          <div className="flex items-center">
+          <div className="flex items-center min-w-0 overflow-hidden">
             {domain && (
               <Tooltip.Root delayDuration={50}>
                 <Tooltip.Trigger asChild>
@@ -113,7 +113,7 @@ const Story: NextPage<Props> = (props: Props) => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs mr-3  max-w-[128px] md:max-w-full truncate md:whitespace-normal md:overflow-visible font-normal mb-0.5 border-b hover:text-primary border-primary w-fit font-mono text-secondary mt-0.5 focus-visible:ring-1 focus-visible:ring-blue-500"
+                    className="text-xs mr-3 min-w-0 max-w-[128px] md:max-w-[200px] truncate font-normal mb-0.5 border-b hover:text-primary border-primary inline-block font-mono text-secondary mt-0.5 focus-visible:ring-1 focus-visible:ring-blue-500"
                   >
                     ({domain})
                   </a>
