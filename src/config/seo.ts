@@ -1,5 +1,5 @@
 export const baseUrl =
-  process.env.NODE_ENV === "production" ? "https://hckrnws.com/" : "";
+  process.env.NODE_ENV === "production" ? "https://hckrnws.com" : "";
 
 export const defaultSEO = {
   title: "hckrnws",
