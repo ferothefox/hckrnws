@@ -3,35 +3,32 @@
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme {
-    --font-system:
-        ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-sans:
-        Karla, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-mono:
-        Space Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-        "Liberation Mono", "Courier New", monospace;
+  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: Karla, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: Space Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 
-    --text-color-primary: var(--color-text-primary);
-    --text-color-secondary: var(--color-text-secondary);
-    --text-color-tertiary: var(--color-text-tertiary);
-    --text-color-icon: var(--color-text-icon);
-    --text-color-code: var(--color-text-code);
-    --text-color-btn: var(--color-text-btn);
-    --text-color-link: var(--color-text-link);
+  --text-color-primary: var(--color-text-primary);
+  --text-color-secondary: var(--color-text-secondary);
+  --text-color-tertiary: var(--color-text-tertiary);
+  --text-color-icon: var(--color-text-icon);
+  --text-color-code: var(--color-text-code);
+  --text-color-btn: var(--color-text-btn);
+  --text-color-link: var(--color-text-link);
 
-    --background-color-primary: var(--color-bg-primary);
-    --background-color-secondary: var(--color-bg-secondary);
-    --background-color-tertiary: var(--color-bg-tertiary);
-    --background-color-hover: var(--color-bg-hover);
-    --background-color-code: var(--color-bg-code);
-    --background-color-tooltip: var(--color-bg-tooltip);
-    --background-color-op: var(--color-bg-op);
-    --background-color-btn: var(--color-bg-btn);
+  --background-color-primary: var(--color-bg-primary);
+  --background-color-secondary: var(--color-bg-secondary);
+  --background-color-tertiary: var(--color-bg-tertiary);
+  --background-color-hover: var(--color-bg-hover);
+  --background-color-code: var(--color-bg-code);
+  --background-color-tooltip: var(--color-bg-tooltip);
+  --background-color-op: var(--color-bg-op);
+  --background-color-btn: var(--color-bg-btn);
 
-    --border-color-primary: var(--color-border-primary);
-    --border-color-secondary: var(--color-border-secondary);
+  --border-color-primary: var(--color-border-primary);
+  --border-color-secondary: var(--color-border-secondary);
 }
 
 /*
@@ -43,92 +40,92 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentcolor);
-    }
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
 * {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 button,
 a {
-    outline: none;
+  outline: none;
 }
 
 .quotes {
-    @apply px-4 border-l-2 border-secondary text-tertiary my-4!;
+  @apply px-4 border-l-2 border-secondary text-tertiary my-4!;
 }
 
 /* App Themes */
 
 [data-theme="light"] {
-    --color-text-primary: #18181b;
-    --color-text-secondary: #3f3f46;
-    --color-text-tertiary: #52525b;
-    --color-text-code: #18181b;
-    --color-text-icon: #3c4149;
-    --color-text-btn: #fafafa;
-    --color-text-link: #38bdf8;
+  --color-text-primary: #18181b;
+  --color-text-secondary: #3f3f46;
+  --color-text-tertiary: #52525b;
+  --color-text-code: #18181b;
+  --color-text-icon: #3c4149;
+  --color-text-btn: #fafafa;
+  --color-text-link: #38bdf8;
 
-    --color-bg-primary: #fafafa;
-    --color-bg-secondary: #f4f4f5;
-    --color-bg-tertiary: #e4e4e7;
-    --color-bg-hover: #f4f4f5;
-    --color-bg-tooltip: #f5f6f8;
-    --color-bg-code: #edebe5;
-    --color-bg-op: #ddd6fe;
-    --color-bg-btn: #18181b;
+  --color-bg-primary: #fafafa;
+  --color-bg-secondary: #f4f4f5;
+  --color-bg-tertiary: #e4e4e7;
+  --color-bg-hover: #f4f4f5;
+  --color-bg-tooltip: #f5f6f8;
+  --color-bg-code: #edebe5;
+  --color-bg-op: #ddd6fe;
+  --color-bg-btn: #18181b;
 
-    --color-border-primary: #d4d4d8;
-    --color-border-secondary: #a1a1aa;
+  --color-border-primary: #d4d4d8;
+  --color-border-secondary: #a1a1aa;
 }
 
 [data-theme="dark"] {
-    --color-text-primary: #fafafa;
-    --color-text-secondary: #d4d4d8;
-    --color-text-tertiary: #a1a1aa;
-    --color-text-code: #fafafa;
-    --color-text-icon: #c3c4c6;
-    --color-text-btn: #18181b;
-    --color-text-link: #38bdf8;
+  --color-text-primary: #fafafa;
+  --color-text-secondary: #d4d4d8;
+  --color-text-tertiary: #a1a1aa;
+  --color-text-code: #fafafa;
+  --color-text-icon: #c3c4c6;
+  --color-text-btn: #18181b;
+  --color-text-link: #38bdf8;
 
-    --color-bg-primary: #000000;
-    --color-bg-secondary: #27272a;
-    --color-bg-tertiary: #3f3f46;
-    --color-bg-hover: #232324;
-    --color-bg-tooltip: #1a1a1a;
-    --color-bg-code: #202020;
-    --color-bg-op: #5b21b6;
-    --color-bg-btn: #fafafa;
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #27272a;
+  --color-bg-tertiary: #3f3f46;
+  --color-bg-hover: #232324;
+  --color-bg-tooltip: #1a1a1a;
+  --color-bg-code: #202020;
+  --color-bg-op: #5b21b6;
+  --color-bg-btn: #fafafa;
 
-    --color-border-primary: #1b1b1b;
-    --color-border-secondary: #52525b;
+  --color-border-primary: #1b1b1b;
+  --color-border-secondary: #52525b;
 }
 
 [data-theme="andromeda"] {
-    --color-text-primary: #ffffff;
-    --color-text-secondary: #a5aba8;
-    --color-text-tertiary: #aeabb1;
-    --color-text-code: #ffffff;
-    --color-text-icon: #c3c4c6;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a5aba8;
+  --color-text-tertiary: #aeabb1;
+  --color-text-code: #ffffff;
+  --color-text-icon: #c3c4c6;
 
-    --color-bg-primary: #1e2025;
-    --color-bg-secondary: #272a32;
-    --color-bg-tertiary: #22242a;
-    --color-bg-hover: #262930;
-    --color-bg-code: #1e2025;
-    --color-bg-tooltip: #1a1a1a;
+  --color-bg-primary: #1e2025;
+  --color-bg-secondary: #272a32;
+  --color-bg-tertiary: #22242a;
+  --color-bg-hover: #262930;
+  --color-bg-code: #1e2025;
+  --color-bg-tooltip: #1a1a1a;
 
-    --color-border-primary: #2b2e37;
-    --color-border-secondary: #24262d;
+  --color-border-primary: #2b2e37;
+  --color-border-secondary: #24262d;
 }
 
 /* App Themes */
@@ -136,203 +133,180 @@ a {
 /* Karla */
 /* karla-regular - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: normal;
-    font-weight: 400;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-regular.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/karla/karla-v23-latin-regular.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-500 - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: normal;
-    font-weight: 500;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-500.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 500;
+  src: local(""), url("/fonts/karla/karla-v23-latin-500.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-600 - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: normal;
-    font-weight: 600;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-600.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-600.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""), url("/fonts/karla/karla-v23-latin-600.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-600.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-700 - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: normal;
-    font-weight: 700;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-700.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: normal;
+  font-weight: 700;
+  src: local(""), url("/fonts/karla/karla-v23-latin-700.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-italic - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: italic;
-    font-weight: 400;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-italic.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: italic;
+  font-weight: 400;
+  src: local(""),
+    url("/fonts/karla/karla-v23-latin-italic.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-500italic - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: italic;
-    font-weight: 500;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-500italic.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: italic;
+  font-weight: 500;
+  src: local(""),
+    url("/fonts/karla/karla-v23-latin-500italic.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* karla-700italic - latin */
 @font-face {
-    font-family: "Karla";
-    font-style: italic;
-    font-weight: 700;
-    src:
-        local(""),
-        url("/fonts/karla/karla-v23-latin-700italic.woff2") format("woff2"),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url("/fonts/karla/karla-v23-latin-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-family: "Karla";
+  font-style: italic;
+  font-weight: 700;
+  src: local(""),
+    url("/fonts/karla/karla-v23-latin-700italic.woff2") format("woff2"),
+    /* Chrome 26+, Opera 23+, Firefox 39+ */
+      url("/fonts/karla/karla-v23-latin-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 /* space-mono-regular - latin */
 @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Space Mono";
-    font-style: normal;
-    font-weight: 400;
-    src:
-        url("/fonts/space_mono/space-mono-v12-latin-regular.woff2")
-            format("woff2"),
-        /* Chrome 36+, Opera 23+, Firefox 39+ */
-            url("/fonts/space_mono/space-mono-v12-latin-regular.woff")
-            format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/space_mono/space-mono-v12-latin-regular.woff2")
+      format("woff2"),
+    /* Chrome 36+, Opera 23+, Firefox 39+ */
+      url("/fonts/space_mono/space-mono-v12-latin-regular.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
 @keyframes fadein {
-    from {
-        transform: translateY(4px);
-        opacity: 0;
-    }
+  from {
+    transform: translateY(4px);
+    opacity: 0;
+  }
 
-    to {
-        transform: none;
-        opacity: 1;
-    }
+  to {
+    transform: none;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein-algolia {
-    from {
-        opacity: 0;
-    }
+  from {
+    opacity: 0;
+  }
 
-    to {
-        opacity: 1;
-    }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes loading {
-    from {
-        pointer-events: all;
-        opacity: 1;
-    }
+  from {
+    pointer-events: all;
+    opacity: 1;
+  }
 
-    to {
-        pointer-events: none;
-        opacity: 0;
-    }
+  to {
+    pointer-events: none;
+    opacity: 0;
+  }
 }
 
 @keyframes loading-logo {
-    from {
-        opacity: 1;
-    }
+  from {
+    opacity: 1;
+  }
 
-    to {
-        transform: scale(0.5);
-        opacity: 0;
-    }
+  to {
+    transform: scale(0.5);
+    opacity: 0;
+  }
 }
 
 .loading-animation {
-    animation: loading 0.23s forwards;
-    animation-delay: 0.12s;
-    animation-timing-function: ease-in-out;
+  animation: loading 0.23s forwards;
+  animation-delay: 0.12s;
+  animation-timing-function: ease-in-out;
 }
 
 .loading-logo {
-    animation: loading-logo 0.23s forwards;
-    animation-delay: 0.12s;
-    animation-timing-function: ease-in-out;
+  animation: loading-logo 0.23s forwards;
+  animation-delay: 0.12s;
+  animation-timing-function: ease-in-out;
 }
 
-.fadein-animation-1 {
-    animation: fadein 0.2s both;
-    animation-timing-function: ease-in-out;
-}
-
-.fadein-animation-2 {
-    animation: fadein 0.2s both;
-    animation-delay: 0.02s;
-    animation-timing-function: ease-in-out;
-}
-
-.fadein-animation-3 {
-    animation: fadein 0.2s both;
-    animation-delay: 0.04s;
-    animation-timing-function: ease-in-out;
+.fadein-animation {
+  animation: fadein 0.2s both;
+  animation-delay: var(--fadein-delay, 0s);
+  animation-timing-function: ease-in-out;
 }
 
 .fadein-animation-algolia {
-    animation: fadein-algolia 0.2s both;
-    animation-delay: 0.4s;
-    animation-timing-function: ease-in-out;
+  animation: fadein-algolia 0.2s both;
+  animation-delay: 0.4s;
+  animation-timing-function: ease-in-out;
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
-    height: 15px;
-    background-color: transparent;
-    padding-right: 8px;
+  width: 0px;
+  height: 15px;
+  background-color: transparent;
+  padding-right: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #080808;
+  background-color: #080808;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 9999px;
-    background-color: #ffffff2b;
-    background-clip: padding-box;
+  border-radius: 9999px;
+  background-color: #ffffff2b;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    border-width: 5px;
+  border-width: 5px;
 }
 
 ::-webkit-scrollbar-corner {
-    background-color: transparent;
+  background-color: transparent;
 }

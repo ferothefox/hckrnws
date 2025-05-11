@@ -22,11 +22,10 @@ const Meta: React.FC<Props> = ({
 
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return (
-    <div className={`${
-      isDetailedView ? "h-[24px]" : "h-[28px]"
-    }`}></div>
-  );
+  if (!mounted)
+    return (
+      <div className={`${isDetailedView ? "h-[24px]" : "h-[28px]"}`}></div>
+    );
 
   return (
     <div
@@ -35,19 +34,28 @@ const Meta: React.FC<Props> = ({
       }`}
     >
       <div className="flex items-center">
-        <div className="fadein-animation-1 flex items-center mr-2 p-1 pl-0">
+        <div
+          className="fadein-animation flex items-center mr-2 p-1 pl-0"
+          style={{ "--fadein-delay": "0s" } as React.CSSProperties}
+        >
           <UpvoteIcon className="h-3 w-3 text-icon" />
           <span className="text-xs ml-1 text-secondary font-sans">
             {points}
           </span>
         </div>
-        <div className="fadein-animation-2 flex items-center mr-2 p-1 pl-0">
+        <div
+          className="fadein-animation flex items-center mr-2 p-1 pl-0"
+          style={{ "--fadein-delay": "0.02s" } as React.CSSProperties}
+        >
           <CommentIcon className="h-3 w-3 text-icon" />
           <span className="text-xs ml-1 text-secondary font-sans">
             {comments}
           </span>
         </div>
-        <div className="fadein-animation-3 flex items-center mr-2 p-1 pl-0">
+        <div
+          className="fadein-animation flex items-center mr-2 p-1 pl-0"
+          style={{ "--fadein-delay": "0.04s" } as React.CSSProperties}
+        >
           <ClockIcon className="h-3 w-3 text-icon" />
           <span className="text-xs ml-1 text-secondary font-sans">
             {prettyTime(time)}
