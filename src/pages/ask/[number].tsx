@@ -66,14 +66,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Get the paths we want to pre-render based on posts
   const paths = [...Array(1)].map((x, idx) => ({
     params: { number: (idx + 1).toString() },
   }));
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: 'blocking' } will server-render pages
-  // on-demand if the path doesn't exist.
   return { paths, fallback: "blocking" };
 };
 
