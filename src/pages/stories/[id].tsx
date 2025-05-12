@@ -1,9 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
+import { NextSeo } from "next-seo";
+import { baseUrl } from "~/config/seo";
 
 import { useRouter } from "next/router";
 import { TDetailedStory } from "~/types/story";
 import { Fragment, useEffect, useState, useMemo, useCallback } from "react";
-import Head from "next/head";
+// import Head from "next/head";
 import Meta from "~/components/Common/Meta";
 import CommentList from "~/components/Comments/CommentList";
 import { BackIcon, StarIcon } from "~/icons";
@@ -85,12 +87,42 @@ const Story: NextPage<Props> = (props: Props) => {
     [comments, user]
   );
 
+  const canonicalUrl = useMemo(() => `${baseUrl}/stories/${id}`, [id]);
+  const description = useMemo(() => {
+    if (content) {
+      return decode(
+        content
+          .replace(/<[^>]+>/g, "")
+          .replace(/\s+/g, " ")
+          .trim()
+      ).slice(0, 160);
+    }
+    return `Discussion of ${url} on Hacker News`;
+  }, [content, url]);
+
   return (
     <Fragment>
-      <Head>
-        <title>{pageTitle}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
+      <NextSeo
+        title={pageTitle}
+        description={description}
+        canonical={canonicalUrl}
+        openGraph={{
+          title: pageTitle,
+          description,
+          url: canonicalUrl,
+          type: "article",
+          site_name: "hckrnws",
+          images: [
+            {
+              url: `${baseUrl}/img/og/default.png`,
+              alt: "hckrnws",
+            },
+          ],
+        }}
+        twitter={{
+          cardType: "summary_large_image",
+        }}
+      />
       <div className="flex flex-col flex-1 mb-8">
         <button
           className="px-2 py-1 bg-transparent rounded-sm flex items-center mb-2 w-fit group hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
