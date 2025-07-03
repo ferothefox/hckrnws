@@ -1,50 +1,32 @@
-"use client";
-
-import { useParams, useRouter } from "next/navigation";
 import { TBaseStory } from "~/types/story";
 import StoryListItem from "~/components/StoryListItem";
-import { useEffect, useState } from "react";
 import Pagination from "~/components/Common/Pagination";
-import { CenteredText } from "~/components/Common/Fragments";
+import { notFound } from "next/navigation";
 
-export default function AskStoriesPage() {
-  const params = useParams();
-  const router = useRouter();
-  const number = params.number as string;
-  const [data, setData] = useState<TBaseStory[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+type Props = {
+  params: Promise<{ number: string }>;
+};
 
-  useEffect(() => {
-    async function fetchStories() {
-      try {
-        const BASE_URL = "https://api.hnpwa.com/v0/ask";
-        const fetchUrl = `${BASE_URL}/${number}.json`;
-        const response = await fetch(fetchUrl);
-        
-        if (!response.ok) {
-          setError(true);
-          return;
-        }
-        
-        const storiesData = await response.json();
-        setData(storiesData);
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    }
+async function getAskStories(pageNumber: string): Promise<TBaseStory[]> {
+  const BASE_URL = "https://api.hnpwa.com/v0/ask";
+  const fetchUrl = `${BASE_URL}/${pageNumber}.json`;
+  
+  const response = await fetch(fetchUrl);
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ask stories: ${response.status}`);
+  }
+  
+  return response.json();
+}
 
-    fetchStories();
-  }, [number]);
+export default async function AskStoriesPage({ params }: Props) {
+  const { number } = await params;
+  const data = await getAskStories(number);
 
-  if (error) return <CenteredText>Oops! Something went wrong :(</CenteredText>;
-  if (loading || !data) return <CenteredText>Loading...</CenteredText>;
-
-  const handlePageChange = (page: number) => {
-    router.push(`/ask/${page}`);
-  };
+  if (!data || data.length === 0) {
+    notFound();
+  }
 
   return (
     <div className="flex-1">
@@ -53,8 +35,8 @@ export default function AskStoriesPage() {
       ))}
       <Pagination
         currentPage={parseInt(number)}
-        onChangePage={handlePageChange}
         totalPages={1}
+        basePath="/ask"
       />
     </div>
   );

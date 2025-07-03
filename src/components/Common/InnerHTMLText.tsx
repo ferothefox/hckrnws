@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+"use client";
+
+import { useMemo } from "react";
 import { processContent } from "~/helpers/contentProcessor";
 
 interface IProps {
@@ -7,16 +9,9 @@ interface IProps {
 }
 
 const InnerHTMLText = ({ content, isDescription = false }: IProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
-
   const processedContent = useMemo(() => {
     return processContent(content);
   }, [content]);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const className = useMemo(
     () =>
@@ -28,9 +23,8 @@ const InnerHTMLText = ({ content, isDescription = false }: IProps) => {
 
   return (
     <div
-      ref={contentRef}
       dangerouslySetInnerHTML={{
-        __html: isMounted ? processContent(content) : processedContent,
+        __html: processedContent,
       }}
       className={className}
     />

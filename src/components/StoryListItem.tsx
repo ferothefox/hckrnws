@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { TBaseStory } from "~/types/story";
 import Meta from "~/components/Common/Meta";
-import useStore from "~/store/useStore";
 import { decode } from "html-entities";
-import { useEffect, useState } from "react";
-import { StarIcon } from "~/icons";
+import StoryStarButton from "~/components/StoryStarButton";
 import { Tooltip } from "radix-ui";
 
 type Props = {
@@ -16,26 +14,8 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
     story: { title, user, url, id, points, comments_count, time, domain },
     story,
   } = props;
-  const [isStoryStarred, setIsStoryStarred] = useState(false);
-
-  const starStory = useStore((state) => state.starStory);
-  const starred = useStore((state) => state.starred);
-
-  useEffect(() => {
-    setIsStoryStarred(starred?.some((story) => story.id === id));
-  }, [starred, id]);
 
   if (!user) return null;
-
-  const handleStar = () => {
-    const isStoryStarred = starred?.some((story) => story.id === id);
-    if (isStoryStarred) {
-      const filteredStories = starred?.filter((story) => story.id !== id);
-      starStory(filteredStories);
-    } else {
-      starStory([...starred, story]);
-    }
-  };
 
   return (
     <div className="py-2 flex flex-col w-full bg-transparent duration-100 border-b border-primary">
@@ -76,19 +56,7 @@ const StoryListItem: React.FC<Props> = (props: Props) => {
           user={user}
           url={url}
         />
-        <button
-          className="flex mr-2 p-1 w-fit items-center cursor-default rounded-sm border-none hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
-          onClick={handleStar}
-        >
-          <StarIcon
-            className={`h-3 w-3 ${
-              isStoryStarred ? "text-amber-400" : "text-icon"
-            }`}
-          />
-          <span className="text-xs ml-1 text-secondary font-sans">
-            {isStoryStarred ? "Starred" : "Star"}
-          </span>
-        </button>
+        <StoryStarButton story={story} />
       </div>
     </div>
   );

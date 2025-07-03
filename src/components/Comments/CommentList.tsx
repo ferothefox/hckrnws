@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, memo, useMemo } from "react";
 import { TComment } from "~/types/story";
 import { CenteredText } from "../Common/Fragments";

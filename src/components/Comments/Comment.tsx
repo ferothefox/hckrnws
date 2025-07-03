@@ -1,3 +1,5 @@
+"use client";
+
 import { prettyTime } from "~/helpers/time";
 import {
   Fragment,
