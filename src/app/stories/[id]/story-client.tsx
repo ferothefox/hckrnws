@@ -1,11 +1,8 @@
-import { GetServerSideProps, NextPage } from "next";
-import { NextSeo } from "next-seo";
-import { baseUrl } from "~/config/seo";
+"use client";
 
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import { TDetailedStory } from "~/types/story";
 import { Fragment, useEffect, useState, useMemo, useCallback } from "react";
-// import Head from "next/head";
 import Meta from "~/components/Common/Meta";
 import CommentList from "~/components/Comments/CommentList";
 import { BackIcon, StarIcon } from "~/icons";
@@ -15,31 +12,17 @@ import InnerHTMLText from "~/components/Common/InnerHTMLText";
 import { useKeyPress } from "~/hooks/useKeyPress";
 import { Tooltip } from "radix-ui";
 
-type Props = {
-  data: TDetailedStory;
-  errorCode: false | number;
-};
-
-const Story: NextPage<Props> = (props: Props) => {
+export default function StoryPage() {
+  const params = useParams();
   const router = useRouter();
-  const { data } = props;
+  const id = params.id as string;
+  const [data, setData] = useState<TDetailedStory | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [isStoryStarred, setIsStoryStarred] = useState(false);
 
   const starStory = useStore((state) => state.starStory);
   const starred = useStore((state) => state.starred);
-
-  const {
-    title,
-    id,
-    points,
-    user,
-    time,
-    content,
-    comments,
-    domain,
-    comments_count,
-  } = data;
-  let { url } = data;
 
   const onClickBack = useCallback(() => {
     router.back();
@@ -47,82 +30,87 @@ const Story: NextPage<Props> = (props: Props) => {
 
   useKeyPress("Escape", onClickBack);
 
-  if (url.startsWith("item?id=")) {
-    url = url.replace("item?id=", "");
-  }
+  useEffect(() => {
+    async function fetchStory() {
+      try {
+        const ITEM_BASE_URL = "https://api.hnpwa.com/v0/item";
+        const fetchUrl = `${ITEM_BASE_URL}/${id}.json`;
+        const response = await fetch(fetchUrl);
+        
+        if (!response.ok) {
+          setError(true);
+          return;
+        }
+        
+        const storyData = await response.json();
+        setData(storyData);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStory();
+  }, [id]);
+
+  useEffect(() => {
+    if (data) {
+      setIsStoryStarred(starred?.some((story) => story.id === data.id) || false);
+    }
+  }, [starred, data]);
 
   const story = useMemo(
-    () => ({
-      id,
-      title,
-      points,
-      user,
-      time,
-      url,
-      domain,
-      comments_count: comments_count,
-    }),
-    [id, title, points, user, time, url, domain, comments_count]
+    () => data ? ({
+      id: data.id,
+      title: data.title,
+      points: data.points,
+      user: data.user,
+      time: data.time,
+      url: data.url.startsWith("item?id=") ? data.url.replace("item?id=", "") : data.url,
+      domain: data.domain,
+      comments_count: data.comments_count,
+    }) : null,
+    [data]
   );
 
   const handleStar = useCallback(() => {
-    // save them to the zustand store, which in turn will save to local storage
-    const isStoryStarred = starred?.some((story) => story.id === id);
+    if (!data || !story) return;
+    const isStoryStarred = starred?.some((story) => story.id === data.id);
     if (isStoryStarred) {
-      const filteredStories = starred?.filter((story) => story.id !== id);
+      const filteredStories = starred?.filter((story) => story.id !== data.id);
       starStory(filteredStories);
     } else {
       starStory([...starred, story]);
     }
-  }, [starred, story, id, starStory]);
-
-  useEffect(() => {
-    setIsStoryStarred(starred?.some((story) => story.id === id));
-  }, [starred, id]);
-
-  const pageTitle = useMemo(() => `${decode(title)} - hckrnws`, [title]);
+  }, [starred, story, data, starStory]);
 
   const commentsSection = useMemo(
-    () => <CommentList comments={comments} op={user} />,
-    [comments, user]
+    () => data ? <CommentList comments={data.comments} op={data.user} /> : null,
+    [data]
   );
 
-  const canonicalUrl = useMemo(() => `${baseUrl}/stories/${id}`, [id]);
-  const description = useMemo(() => {
-    if (content) {
-      return decode(
-        content
-          .replace(/<[^>]+>/g, "")
-          .replace(/\s+/g, " ")
-          .trim()
-      ).slice(0, 160);
-    }
-    return `Discussion of ${url} on Hacker News`;
-  }, [content, url]);
+  if (loading) return <div>Loading...</div>;
+  if (error || !data) return <div>Error loading story</div>;
+
+  const {
+    title,
+    points,
+    user,
+    time,
+    content,
+    domain,
+    comments_count,
+  } = data;
+  
+  let { url } = data;
+
+  if (url.startsWith("item?id=")) {
+    url = url.replace("item?id=", "");
+  }
 
   return (
     <Fragment>
-      <NextSeo
-        title={pageTitle}
-        description={description}
-        canonical={canonicalUrl}
-        openGraph={{
-          title: pageTitle,
-          description,
-          url: canonicalUrl,
-          type: "article",
-          site_name: "hckrnws",
-          images: [
-            {
-              url: `${baseUrl}/img/og/default.png`,
-              alt: "hckrnws",
-            },
-          ],
-        }}
-        twitter={{
-          cardType: "summary_large_image",
-        }}
-      />
       <div className="flex flex-col flex-1 mb-8">
         <button
           className="px-2 py-1 bg-transparent rounded-sm flex items-center mb-2 w-fit group hover:bg-hover focus-visible:ring-1 focus-visible:ring-blue-500"
@@ -164,7 +152,7 @@ const Story: NextPage<Props> = (props: Props) => {
               points={points}
               user={user}
               isDetailedView
-              comments={comments_count} // Use comments_count instead of comments.length
+              comments={comments_count}
               url={url}
             />
           </div>
@@ -192,25 +180,4 @@ const Story: NextPage<Props> = (props: Props) => {
       </div>
     </Fragment>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-
-  const ITEM_BASE_URL = "https://api.hnpwa.com/v0/item";
-
-  const fetchUrl = `${ITEM_BASE_URL}/${id}.json`;
-
-  const response = await fetch(fetchUrl);
-  const errorCode = response.ok ? false : response.status;
-  const data = errorCode === false ? await response.json() : [];
-
-  return {
-    props: {
-      errorCode,
-      data,
-    },
-  };
-};
-
-export default Story;
+}

@@ -1,7 +1,5 @@
 import SearchForm from "~/components/Common/SearchInput";
 
-const Search = () => {
+export default function SearchPage() {
   return <SearchForm />;
-};
-
-export default Search;
+}

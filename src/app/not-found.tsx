@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const NotFound = () => {
+export default function NotFound() {
   return (
     <div className="flex flex-col justify-center items-center">
       <p className="text-xl md:text-2xl mt-8 font-semibold text-center">
@@ -11,6 +11,4 @@ const NotFound = () => {
       </button>
     </div>
   );
-};
-
-export default NotFound;
+}

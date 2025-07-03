@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
@@ -12,13 +14,14 @@ import {
   SearchIcon,
 } from "~/icons";
 import Dropdown from "../Common/Dropdown";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useKeyPress } from "~/hooks/useKeyPress";
 
 const Header: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
   useKeyPress("t", () => router.push("/top/1"));
@@ -84,7 +87,7 @@ const Header: React.FC = () => {
   ];
 
   const selectedItem = dropdownItems.find((item) =>
-    router.pathname.includes(item.id)
+    pathname.includes(item.id)
   );
 
   const triggerLabel = () => (
