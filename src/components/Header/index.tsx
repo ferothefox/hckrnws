@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+"use client";
 
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import {
   AskHNIcon,
   TopHNIcon,
@@ -10,16 +12,16 @@ import {
   MoonIcon,
   StarIcon,
   SearchIcon,
-} from "~/icons";
+} from "@/icons";
 import Dropdown from "../Common/Dropdown";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { useKeyPress } from "~/hooks/useKeyPress";
+import { useHydrated } from "@/hooks/useHydrated";
+import { useKeyPress } from "@/hooks/useKeyPress";
 
-const Header: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
+export default function Header() {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const { resolvedTheme, setTheme } = useTheme();
+  const hydrated = useHydrated();
 
   useKeyPress("t", () => router.push("/top/1"));
   useKeyPress("s", () => router.push("/show/1"));
@@ -28,16 +30,14 @@ const Header: React.FC = () => {
   useKeyPress("x", () => router.push("/star"));
   useKeyPress("e", () => router.push("/search"));
 
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
+  if (!hydrated) return null;
 
   const dropdownItems = [
     {
       label: "Top",
       id: "top",
       icon: (
-        <TopHNIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <TopHNIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "T",
     },
@@ -45,7 +45,7 @@ const Header: React.FC = () => {
       label: "Show",
       id: "show",
       icon: (
-        <ShowHNIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <ShowHNIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "S",
     },
@@ -53,7 +53,7 @@ const Header: React.FC = () => {
       label: "New",
       id: "new",
       icon: (
-        <ClockIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <ClockIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "N",
     },
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
       label: "Ask",
       id: "ask",
       icon: (
-        <AskHNIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <AskHNIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "A",
     },
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
       label: "Starred",
       id: "star",
       icon: (
-        <StarIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <StarIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "X",
     },
@@ -77,20 +77,19 @@ const Header: React.FC = () => {
       label: "Search",
       id: "search",
       icon: (
-        <SearchIcon className="h-4 w-4 mr-2 text-icon group-hover:text-primary" />
+        <SearchIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
       ),
       kbd: "E",
     },
   ];
 
-  const selectedItem = dropdownItems.find((item) =>
-    router.pathname.includes(item.id)
-  );
+  const currentSection = pathname?.split("/")[1];
+  const selectedItem = dropdownItems.find((item) => item.id === currentSection);
 
   const triggerLabel = () => (
     <div className="flex items-center">
       {selectedItem?.icon}
-      <span className="text-sm font-medium text-primary">
+      <span className="text-primary text-sm font-medium">
         {selectedItem?.label || "Go to"}
       </span>
     </div>
@@ -105,9 +104,9 @@ const Header: React.FC = () => {
   };
 
   return (
-    <div className="flex select-none justify-between items-center h-16 flex-none">
+    <div className="flex h-16 flex-none items-center justify-between select-none">
       <Link href="/top/1">
-        <h2 className="text-xl md:text-2xl font-mono text-primary">hckrnws</h2>
+        <h2 className="text-primary font-mono text-xl md:text-2xl">hckrnws</h2>
       </Link>
       <div className="flex items-center">
         <Dropdown
@@ -117,20 +116,18 @@ const Header: React.FC = () => {
           handleOnClick={handleOnClick}
         />
         <button
-          className="p-1.5 border border-primary bg-secondary ml-2 hover:bg-tertiary duration-150 cursor-default rounded-sm focus-visible:ring-1 focus-visible:ring-blue-500"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="border-primary bg-secondary hover:bg-tertiary ml-2 cursor-pointer rounded-sm border p-1.5 duration-150 focus-visible:ring-1 focus-visible:ring-blue-500"
+          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           type="button"
           aria-label="Toggle Theme"
         >
-          {theme === "dark" ? (
-            <SunIcon className="h-4 w-4 text-icon" />
+          {resolvedTheme === "dark" ? (
+            <SunIcon className="text-icon h-4 w-4" />
           ) : (
-            <MoonIcon className="h-4 w-4 text-icon" />
+            <MoonIcon className="text-icon h-4 w-4" />
           )}
         </button>
       </div>
     </div>
   );
-};
-
-export default Header;
+}

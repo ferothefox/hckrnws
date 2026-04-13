@@ -1,64 +1,68 @@
-import { Fragment } from "react";
-import { ArrowLeftIcon, ArrowRightIcon } from "~/icons";
+import Link from "next/link";
+import { ArrowLeftIcon, ArrowRightIcon } from "@/icons";
 
 type PaginationProps = {
   currentPage: number;
   totalPages?: number;
-  onChangePage: (page: number) => void;
+  basePath: `/${string}`;
 };
 
-const Pagination = ({
+export default function Pagination({
   currentPage,
   totalPages = 10,
-  onChangePage,
-}: PaginationProps) => {
+  basePath,
+}: PaginationProps) {
   const isPrevDisabled = currentPage === 1;
   const isNextDisabled = currentPage === totalPages;
+  const previousPageHref = `${basePath}/${currentPage - 1}`;
+  const nextPageHref = `${basePath}/${currentPage + 1}`;
+
   return (
-    <Fragment>
-      <div className="flex justify-center items-center mt-8 mb-1 rounded-full">
-        <button
-          className="px-4 py-2 rounded-l-full flex items-center border-r border-primary justify-start bg-tertiary group enabled:hover:bg-btn w-20 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:ring-1 focus-visible:ring-blue-500"
-          disabled={isPrevDisabled}
-          onClick={() => onChangePage(currentPage - 1)}
-        >
-          <ArrowLeftIcon
-            className={`h-4 w-4 text-icon ${
-              !isPrevDisabled ? "group-hover:text-btn" : ""
-            }`}
-          />
+    <nav className="mt-8 mb-3" aria-label="Story list pagination">
+      <div className="mb-1 flex items-center justify-center rounded-full">
+        {isPrevDisabled ? (
           <span
-            className={`text-sm font-normal font-sans text-secondary ${
-              !isPrevDisabled ? "group-hover:text-btn" : ""
-            } ml-1`}
+            className="border-primary bg-tertiary flex w-20 cursor-not-allowed items-center justify-start rounded-l-full border-r px-4 py-2 opacity-40"
+            aria-disabled="true"
           >
-            Prev
+            <ArrowLeftIcon className="text-icon h-4 w-4" />
+            <span className="text-secondary ml-1 font-sans text-sm font-normal">
+              Prev
+            </span>
           </span>
-        </button>
-        <button
-          className="px-4 py-2 rounded-r-full flex items-center justify-end bg-tertiary group enabled:hover:bg-btn w-20 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:ring-1 focus-visible:ring-blue-500"
-          disabled={isNextDisabled}
-          onClick={() => onChangePage(currentPage + 1)}
-        >
-          <span
-            className={`text-sm font-normal font-sans text-secondary ${
-              !isNextDisabled ? "group-hover:text-btn" : ""
-            } mr-1`}
+        ) : (
+          <Link
+            href={previousPageHref}
+            className="border-primary bg-tertiary group hover:bg-btn flex w-20 items-center justify-start rounded-l-full border-r px-4 py-2 focus-visible:ring-1 focus-visible:ring-blue-500"
           >
-            Next
+            <ArrowLeftIcon className="text-icon group-hover:text-btn h-4 w-4" />
+            <span className="text-secondary group-hover:text-btn ml-1 font-sans text-sm font-normal">
+              Prev
+            </span>
+          </Link>
+        )}
+        {isNextDisabled ? (
+          <span className="bg-tertiary flex w-20 cursor-not-allowed items-center justify-end rounded-r-full px-4 py-2 opacity-40">
+            <span className="text-secondary mr-1 font-sans text-sm font-normal">
+              Next
+            </span>
+            <ArrowRightIcon className="text-icon h-4 w-4" />
           </span>
-          <ArrowRightIcon
-            className={`h-4 w-4 text-icon ${
-              !isNextDisabled ? "group-hover:text-btn" : ""
-            }`}
-          />
-        </button>
+        ) : (
+          <Link
+            href={nextPageHref}
+            className="bg-tertiary group hover:bg-btn flex w-20 items-center justify-end rounded-r-full px-4 py-2 focus-visible:ring-1 focus-visible:ring-blue-500"
+          >
+            <span className="text-secondary group-hover:text-btn mr-1 font-sans text-sm font-normal">
+              Next
+            </span>
+            <ArrowRightIcon className="text-icon group-hover:text-btn h-4 w-4" />
+          </Link>
+        )}
       </div>
-      <p className="text-center text-secondary text-sm mb-3 font-sans">
+      <p className="text-secondary text-center font-sans text-sm">
         Page {currentPage} of {totalPages}
       </p>
-    </Fragment>
+    </nav>
   );
-};
-
-export default Pagination;
+}

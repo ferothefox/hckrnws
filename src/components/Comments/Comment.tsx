@@ -1,16 +1,10 @@
-import { prettyTime } from "~/helpers/time";
-import {
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  memo,
-  useState,
-  useRef,
-} from "react";
-import { TComment } from "~/types/story";
-import { ChevronDownIcon, ChevronUpIcon, ClipboardIcon } from "~/icons";
-import InnerHTMLText from "~/components/Common/InnerHTMLText";
+"use client";
+
+import { prettyTime } from "@/helpers/time";
+import { useState } from "react";
+import { ChevronDownIcon, ChevronUpIcon, ClipboardIcon } from "@/icons";
+import InnerHTMLText from "@/components/Common/InnerHTMLText";
+import type { TComment } from "@/types/story";
 
 type Props = {
   comment: TComment;
@@ -21,145 +15,131 @@ const getCommentStyles = (level: number, margin: number) => ({
   marginLeft: `calc(${margin}px * ${level})`,
 });
 
-const Comment: React.FC<Props> = memo((props: Props) => {
-  const {
-    comment: {
-      user,
-      content,
-      time,
-      deleted,
-      level,
-      comments,
-      comments_count,
-      id,
-    },
-    op,
-  } = props;
-
-  const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [wasUncollapsed, setWasUncollapsed] = useState<boolean>(false);
-
-  const handleCollapse = useCallback(() => setCollapsed(true), []);
-
-  const handleExpand = useCallback(() => {
-    setCollapsed(false);
-    setWasUncollapsed(true);
-  }, []);
-
-  useEffect(() => {
-    if (contentRef.current && !deleted && wasUncollapsed) {
-      setWasUncollapsed(false);
-    }
-  }, [content, deleted, wasUncollapsed]);
-
-  const contentRef = useRef<HTMLLIElement>(null);
-  const isCommenterOP = useMemo(() => user === op, [user, op]);
-
+export default function Comment({
+  comment: {
+    user,
+    content,
+    time,
+    deleted,
+    level,
+    comments,
+    comments_count,
+    id,
+  },
+  op,
+}: Props) {
+  const [collapsed, setCollapsed] = useState(false);
+  const isCommenterOP = user === op;
   const margin = 16;
-  const commentStyles = useMemo(() => getCommentStyles(level, margin), [level]);
-
-  const handleCopyLink = useCallback(() => {
-    navigator.clipboard.writeText(
-      `${process.env.NEXT_PUBLIC_VERCEL_URL}/stories/${id}`,
-    );
-  }, [id]);
-
-  const userBadge = useMemo(
-    () => (
-      <span
-        className={`text-xs text-secondary font-mono py-1 px-2 rounded flex items-center ${
-          isCommenterOP ? "bg-op" : "bg-secondary"
-        }`}
-      >
-        {user} {isCommenterOP && "• OP"}
-      </span>
-    ),
-    [user, isCommenterOP],
-  );
-
-  const sectionClassName = useMemo(
-    () =>
-      `pt-0 pr-2 pb-1 pl-3 flex flex-col my-2 relative w-full border-l-2 border-primary`,
-    [],
-  );
-
-  const childComments = useMemo(() => {
-    if (!comments?.length) return null;
-    return comments.map((comment) => (
-      <Comment key={comment.id} comment={comment} op={op} />
-    ));
-  }, [comments, op]);
+  const commentStyles = getCommentStyles(level, margin);
 
   if (collapsed) {
     return (
-      <div data-comment="" data-collapsed="true" style={{ display: "flex" }}>
-        <li className={sectionClassName} style={commentStyles}>
+      <li className="my-2 list-none" style={commentStyles}>
+        <div
+          data-comment=""
+          data-collapsed="true"
+          className="border-primary relative flex w-full flex-col border-l-2 pt-0 pr-2 pb-1 pl-3"
+        >
           <div className="flex justify-between">
-            {userBadge}
+            <span
+              className={`text-secondary flex items-center rounded px-2 py-1 font-mono text-xs ${
+                isCommenterOP ? "bg-op" : "bg-secondary"
+              }`}
+            >
+              {user} {isCommenterOP ? "• OP" : null}
+            </span>
             <div className="flex items-center">
               <button
-                className="py-1 px-3 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                onClick={handleCopyLink}
+                type="button"
+                className="group ml-2 px-3 py-1 focus-visible:ring-1 focus-visible:ring-blue-500"
+                onClick={() =>
+                  void navigator.clipboard.writeText(
+                    `${window.location.origin}/stories/${id}`,
+                  )
+                }
+                aria-label="Copy story link"
               >
-                <ClipboardIcon className="h-3 w-3 text-icon mr-2 group-hover:text-primary" />
+                <ClipboardIcon className="text-icon group-hover:text-primary mr-2 h-3 w-3" />
               </button>
-              <span className="py-0.5 px-1.5 text-secondary font-mono bg-tertiary rounded-sm text-[10px]">
+              <span className="text-secondary bg-tertiary rounded-sm px-1.5 py-0.5 font-mono text-[10px]">
                 {comments_count}
               </span>
               <button
-                className="py-1 px-3 ml-2 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                onClick={handleExpand}
+                type="button"
+                className="group ml-2 px-3 py-1 focus-visible:ring-1 focus-visible:ring-blue-500"
+                onClick={() => setCollapsed(false)}
+                aria-label="Expand comment"
               >
-                <ChevronDownIcon className="h-3 w-3 text-icon group-hover:text-primary" />
+                <ChevronDownIcon className="text-icon group-hover:text-primary h-3 w-3" />
               </button>
             </div>
           </div>
-        </li>
-      </div>
+        </div>
+      </li>
     );
   }
 
   return (
-    <Fragment>
-      <div data-comment="" data-collapsed="false" style={{ display: "flex" }}>
-        <li className={sectionClassName} style={commentStyles} ref={contentRef}>
-          {!deleted && (
-            <div className="flex justify-between mb-2">
-              {userBadge}
-              <div className="flex items-center">
-                <button
-                  className="py-1 px-3 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={handleCopyLink}
-                >
-                  <ClipboardIcon className="h-3 w-3 text-icon group-hover:text-primary" />
-                </button>
-                <span className="text-secondary select-none font-mono text-[10px]">
-                  {prettyTime(time)}
-                </span>
-                <button
-                  className="py-1 px-3 group focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={handleCollapse}
-                >
-                  <ChevronUpIcon className="h-3 w-3 text-icon group-hover:text-primary" />
-                </button>
-              </div>
+    <li className="my-2 list-none" style={commentStyles}>
+      <div
+        data-comment=""
+        data-collapsed="false"
+        className="border-primary relative flex w-full flex-col border-l-2 pt-0 pr-2 pb-1 pl-3"
+      >
+        {!deleted ? (
+          <div className="mb-2 flex justify-between">
+            <span
+              className={`text-secondary flex items-center rounded px-2 py-1 font-mono text-xs ${
+                isCommenterOP ? "bg-op" : "bg-secondary"
+              }`}
+            >
+              {user} {isCommenterOP ? "• OP" : null}
+            </span>
+            <div className="flex items-center">
+              <button
+                type="button"
+                className="group px-3 py-1 focus-visible:ring-1 focus-visible:ring-blue-500"
+                onClick={() =>
+                  void navigator.clipboard.writeText(
+                    `${window.location.origin}/stories/${id}`,
+                  )
+                }
+                aria-label="Copy story link"
+              >
+                <ClipboardIcon className="text-icon group-hover:text-primary h-3 w-3" />
+              </button>
+              <time
+                className="text-secondary font-mono text-[10px] select-none"
+                dateTime={new Date(time * 1000).toISOString()}
+                suppressHydrationWarning
+              >
+                {prettyTime(time)}
+              </time>
+              <button
+                type="button"
+                className="group px-3 py-1 focus-visible:ring-1 focus-visible:ring-blue-500"
+                onClick={() => setCollapsed(true)}
+                aria-label="Collapse comment"
+              >
+                <ChevronUpIcon className="text-icon group-hover:text-primary h-3 w-3" />
+              </button>
             </div>
-          )}
-          {deleted ? (
-            <p className="font-mono text-secondary text-sm">[deleted]</p>
-          ) : (
-            <InnerHTMLText
-              key={`content-${wasUncollapsed ? "uncollapsed" : "normal"}`}
-              content={content}
-            />
-          )}
-        </li>
+          </div>
+        ) : null}
+        {deleted ? (
+          <p className="text-secondary font-mono text-sm">[deleted]</p>
+        ) : (
+          <InnerHTMLText content={content ?? ""} />
+        )}
       </div>
-      {childComments}
-    </Fragment>
+      {comments.length > 0 ? (
+        <ol className="m-0 list-none p-0">
+          {comments.map((comment) => (
+            <Comment key={comment.id} comment={comment} op={op} />
+          ))}
+        </ol>
+      ) : null}
+    </li>
   );
-});
-
-Comment.displayName = "Comment";
-
-export default Comment;
+}

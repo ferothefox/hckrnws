@@ -1,13 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
   async redirects() {
     return [
-      {
-        source: "/",
-        destination: "/top/1",
-        permanent: true,
-      },
       {
         source: "/page/1",
         destination: "/top/1",

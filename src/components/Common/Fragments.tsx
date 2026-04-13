@@ -1,11 +1,9 @@
-interface IProps {
-  children: React.ReactNode;
-}
+import type { PropsWithChildren } from "react";
 
-export const CenteredText = ({ children }: IProps) => {
+export function CenteredText({ children }: PropsWithChildren) {
   return (
-    <p className="font-sans text-base text-primary font-normal text-center">
+    <p className="text-primary text-center font-sans text-base font-normal">
       {children}
     </p>
   );
-};
+}

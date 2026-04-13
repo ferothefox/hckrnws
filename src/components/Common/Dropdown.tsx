@@ -1,42 +1,48 @@
-import React from "react";
+import type { ReactNode } from "react";
 import { DropdownMenu } from "radix-ui";
 
-interface IDropdown {
-  triggerLabel?: React.ReactNode;
-  items?: {
-    label: string;
-    id: string;
-    icon?: React.ReactNode;
-    kbd?: string;
-  }[];
-  selectedId?: string;
-  handleOnClick: (id: string) => void;
-}
+type DropdownItem = {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  kbd?: string;
+};
 
-const Dropdown = ({
-  triggerLabel,
+type DropdownProps = {
+  items: DropdownItem[];
+  triggerLabel: ReactNode;
+  handleOnClick: (id: string) => void;
+  selectedId?: string;
+};
+
+export default function Dropdown({
   items,
+  triggerLabel,
   selectedId,
   handleOnClick,
-}: IDropdown) => {
+}: DropdownProps) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className="py-1 px-2 border max-w-[156px] focus-visible:ring-1 focus-visible:ring-blue-500 outline-hidden rounded-sm border-primary bg-secondary hover:bg-tertiary duration-150 font-sans cursor-default text-sm">
+        <button
+          type="button"
+          className="border-primary bg-secondary hover:bg-tertiary max-w-[156px] cursor-pointer rounded-sm border px-2 py-1 font-sans text-sm outline-hidden duration-150 focus-visible:ring-1 focus-visible:ring-blue-500"
+          aria-label="Open story sections"
+        >
           {triggerLabel}
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="shadow-xs bg-primary border border-primary rounded-md p-0.5 w-32"
+          className="bg-primary border-primary w-32 rounded-md border p-0.5 shadow-xs"
           sideOffset={4}
           align="end"
         >
-          {items?.map((item) => (
+          {items.map((item) => (
             <DropdownMenu.Item
               key={item.id}
-              className={`px-2 hover:bg-secondary flex items-center cursor-default py-1.5 mb-0.5 outline-hidden rounded group ring-0 text-sm hover:text-primary ${
+              className={`hover:bg-secondary group hover:text-primary mb-0.5 flex cursor-pointer items-center rounded px-2 py-1.5 text-sm ring-0 outline-hidden ${
                 selectedId === item.id
                   ? "text-primary bg-secondary"
                   : "text-secondary bg-transparent"
@@ -45,7 +51,7 @@ const Dropdown = ({
             >
               {item.icon}
               {item.label}{" "}
-              <span className="text-xs text-tertiary font-normal ml-auto">
+              <span className="text-tertiary ml-auto text-xs font-normal">
                 {item.kbd}
               </span>
             </DropdownMenu.Item>
@@ -54,6 +60,4 @@ const Dropdown = ({
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
   );
-};
-
-export default Dropdown;
+}

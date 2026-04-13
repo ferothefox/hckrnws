@@ -2,12 +2,15 @@
 
 @custom-variant dark (@media (prefers-color-scheme: dark));
 @theme {
-  --font-system: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-sans: Karla, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-mono: Space Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-system:
+    ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    var(--font-karla), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
 
   --text-color-primary: var(--color-text-primary);
   --text-color-secondary: var(--color-text-secondary);
@@ -60,7 +63,7 @@ a {
 }
 
 .quotes {
-  @apply px-4 border-l-2 border-secondary text-tertiary my-4!;
+  @apply border-secondary text-tertiary my-4! border-l-2 px-4;
 }
 
 /* App Themes */
@@ -108,112 +111,7 @@ a {
   --color-border-secondary: #52525b;
 }
 
-[data-theme="andromeda"] {
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a5aba8;
-  --color-text-tertiary: #aeabb1;
-  --color-text-code: #ffffff;
-  --color-text-icon: #c3c4c6;
-
-  --color-bg-primary: #1e2025;
-  --color-bg-secondary: #272a32;
-  --color-bg-tertiary: #22242a;
-  --color-bg-hover: #262930;
-  --color-bg-code: #1e2025;
-  --color-bg-tooltip: #1a1a1a;
-
-  --color-border-primary: #2b2e37;
-  --color-border-secondary: #24262d;
-}
-
 /* App Themes */
-
-/* Karla */
-/* karla-regular - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url("/fonts/karla/karla-v23-latin-regular.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-500 - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: normal;
-  font-weight: 500;
-  src: local(""), url("/fonts/karla/karla-v23-latin-500.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-600 - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: normal;
-  font-weight: 600;
-  src: local(""), url("/fonts/karla/karla-v23-latin-600.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-600.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-700 - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: normal;
-  font-weight: 700;
-  src: local(""), url("/fonts/karla/karla-v23-latin-700.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-italic - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: italic;
-  font-weight: 400;
-  src: local(""),
-    url("/fonts/karla/karla-v23-latin-italic.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-500italic - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: italic;
-  font-weight: 500;
-  src: local(""),
-    url("/fonts/karla/karla-v23-latin-500italic.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* karla-700italic - latin */
-@font-face {
-  font-family: "Karla";
-  font-style: italic;
-  font-weight: 700;
-  src: local(""),
-    url("/fonts/karla/karla-v23-latin-700italic.woff2") format("woff2"),
-    /* Chrome 26+, Opera 23+, Firefox 39+ */
-      url("/fonts/karla/karla-v23-latin-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-/* space-mono-regular - latin */
-@font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-  font-family: "Space Mono";
-  font-style: normal;
-  font-weight: 400;
-  src: url("/fonts/space_mono/space-mono-v12-latin-regular.woff2")
-      format("woff2"),
-    /* Chrome 36+, Opera 23+, Firefox 39+ */
-      url("/fonts/space_mono/space-mono-v12-latin-regular.woff") format("woff"); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
 
 @keyframes fadein {
   from {

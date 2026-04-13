@@ -1,15 +1,15 @@
-const SearchForm: React.FC = () => {
+export default function SearchForm() {
   return (
-    <div className="h-[calc(100vh-56px-32px)] w-full flex flex-col">
-      <p className="text-sm text-secondary">
+    <div className="flex h-[calc(100vh-56px-32px)] w-full flex-col">
+      <p className="text-secondary text-sm">
         Third-party cookies must be enabled to load Algolia frame.
       </p>
-      <object
-        className="fadein-animation-algolia w-full h-full bg-transparent color-transparent relative border-0"
-        data={`https://hn.algolia.com`}
+      <iframe
+        className="fadein-animation-algolia relative h-full w-full border-0 bg-transparent"
+        src="https://hn.algolia.com"
+        title="Hacker News search"
+        loading="lazy"
       />
     </div>
   );
-};
-
-export default SearchForm;
+}

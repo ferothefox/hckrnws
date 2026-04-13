@@ -1,6 +1,8 @@
-import { TIcon } from "~/types";
+type IconProps = {
+  className?: string;
+};
 
-export function BackIcon({ className }: TIcon) {
+export function BackIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +21,7 @@ export function BackIcon({ className }: TIcon) {
   );
 }
 
-export function ChevronDownIcon({ className }: TIcon) {
+export function ChevronDownIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +40,7 @@ export function ChevronDownIcon({ className }: TIcon) {
   );
 }
 
-export function ChevronUpIcon({ className }: TIcon) {
+export function ChevronUpIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +59,7 @@ export function ChevronUpIcon({ className }: TIcon) {
   );
 }
 
-export function ClockIcon({ className }: TIcon) {
+export function ClockIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +78,7 @@ export function ClockIcon({ className }: TIcon) {
   );
 }
 
-export function CommentIcon({ className }: TIcon) {
+export function CommentIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +97,7 @@ export function CommentIcon({ className }: TIcon) {
   );
 }
 
-export function UpvoteIcon({ className }: TIcon) {
+export function UpvoteIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +116,7 @@ export function UpvoteIcon({ className }: TIcon) {
   );
 }
 
-export function StarIcon({ className }: TIcon) {
+export function StarIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -133,7 +135,7 @@ export function StarIcon({ className }: TIcon) {
   );
 }
 
-export function ArrowLeftIcon({ className }: TIcon) {
+export function ArrowLeftIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +154,7 @@ export function ArrowLeftIcon({ className }: TIcon) {
   );
 }
 
-export function ArrowRightIcon({ className }: TIcon) {
+export function ArrowRightIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +173,7 @@ export function ArrowRightIcon({ className }: TIcon) {
   );
 }
 
-export function AskHNIcon({ className }: TIcon) {
+export function AskHNIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +192,7 @@ export function AskHNIcon({ className }: TIcon) {
   );
 }
 
-export function ShowHNIcon({ className }: TIcon) {
+export function ShowHNIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +216,7 @@ export function ShowHNIcon({ className }: TIcon) {
   );
 }
 
-export function TopHNIcon({ className }: TIcon) {
+export function TopHNIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -233,7 +235,7 @@ export function TopHNIcon({ className }: TIcon) {
   );
 }
 
-export function SunIcon({ className }: TIcon) {
+export function SunIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +254,7 @@ export function SunIcon({ className }: TIcon) {
   );
 }
 
-export function MoonIcon({ className }: TIcon) {
+export function MoonIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -271,7 +273,7 @@ export function MoonIcon({ className }: TIcon) {
   );
 }
 
-export function ClipboardIcon({ className }: TIcon) {
+export function ClipboardIcon({ className }: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -290,11 +292,19 @@ export function ClipboardIcon({ className }: TIcon) {
   );
 }
 
-
-export function SearchIcon({ className }: TIcon) {
+export function SearchIcon({ className }: IconProps) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={className}>
-      <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+        clipRule="evenodd"
+      />
     </svg>
-  )
+  );
 }

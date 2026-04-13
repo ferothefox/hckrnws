@@ -1,42 +1,46 @@
-import { useCallback, useEffect, useState } from "react";
+"use client";
 
-interface IKey {
-  key: string;
+import { useEffect, useEffectEvent } from "react";
+
+function isEditableElement(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) {
+    return false;
+  }
+
+  return (
+    target.isContentEditable ||
+    ["INPUT", "SELECT", "TEXTAREA"].includes(target.tagName)
+  );
 }
 
-export function useKeyPress(
-  targetKey: string,
-  handlePress: () => void
-): boolean {
-  const [keyPressed, setKeyPressed] = useState(false);
-
-  const downHandler = useCallback(
-    ({ key }: IKey): void => {
-      if (key === targetKey) {
-        setKeyPressed(true);
-      }
-    },
-    [targetKey]
-  );
-
-  const upHandler = useCallback(
-    ({ key }: IKey): void => {
-      if (key === targetKey) {
-        setKeyPressed(false);
-        handlePress();
-      }
-    },
-    [targetKey, handlePress]
-  );
+export function useKeyPress(targetKey: string, onPress: () => void) {
+  const handlePress = useEffectEvent(onPress);
 
   useEffect(() => {
-    window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
-    };
-  }, [downHandler, upHandler]);
+    const normalizedTargetKey = targetKey.toLowerCase();
 
-  return keyPressed;
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        isEditableElement(event.target)
+      ) {
+        return;
+      }
+
+      if (event.key.toLowerCase() !== normalizedTargetKey) {
+        return;
+      }
+
+      event.preventDefault();
+      handlePress();
+    };
+
+    window.addEventListener("keyup", onKeyUp);
+
+    return () => {
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, [targetKey]);
 }

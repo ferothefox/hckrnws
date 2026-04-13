@@ -1,69 +1,61 @@
-import { prettyTime } from "~/helpers/time";
-import { useEffect, useState } from "react";
-import { ClockIcon, CommentIcon, UpvoteIcon } from "~/icons";
+"use client";
+
+import type { CSSProperties } from "react";
+import { prettyTime } from "@/helpers/time";
+import { ClockIcon, CommentIcon, UpvoteIcon } from "@/icons";
 
 type Props = {
   points: number;
   comments: number;
   time: number;
-  id?: number;
-  user: string;
-  url: string;
   isDetailedView?: boolean;
 };
 
-const Meta: React.FC<Props> = ({
+export default function Meta({
   points,
   comments,
   time,
   isDetailedView = false,
-}) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted)
-    return (
-      <div className={`${isDetailedView ? "h-[24px]" : "h-[28px]"}`}></div>
-    );
-
+}: Props) {
   return (
     <div
-      className={`flex justify-between w-full ${
+      className={`flex w-full justify-between ${
         isDetailedView ? "mt-0" : "mt-1"
       }`}
     >
       <div className="flex items-center">
         <div
-          className="fadein-animation flex items-center mr-2 p-1 pl-0"
-          style={{ "--fadein-delay": "0s" } as React.CSSProperties}
+          className="fadein-animation mr-2 flex items-center p-1 pl-0"
+          style={{ "--fadein-delay": "0s" } as CSSProperties}
         >
-          <UpvoteIcon className="h-3 w-3 text-icon" />
-          <span className="text-xs ml-1 text-secondary font-sans">
+          <UpvoteIcon className="text-icon h-3 w-3" />
+          <span className="text-secondary ml-1 font-sans text-xs">
             {points}
           </span>
         </div>
         <div
-          className="fadein-animation flex items-center mr-2 p-1 pl-0"
-          style={{ "--fadein-delay": "0.02s" } as React.CSSProperties}
+          className="fadein-animation mr-2 flex items-center p-1 pl-0"
+          style={{ "--fadein-delay": "0.02s" } as CSSProperties}
         >
-          <CommentIcon className="h-3 w-3 text-icon" />
-          <span className="text-xs ml-1 text-secondary font-sans">
+          <CommentIcon className="text-icon h-3 w-3" />
+          <span className="text-secondary ml-1 font-sans text-xs">
             {comments}
           </span>
         </div>
         <div
-          className="fadein-animation flex items-center mr-2 p-1 pl-0"
-          style={{ "--fadein-delay": "0.04s" } as React.CSSProperties}
+          className="fadein-animation mr-2 flex items-center p-1 pl-0"
+          style={{ "--fadein-delay": "0.04s" } as CSSProperties}
         >
-          <ClockIcon className="h-3 w-3 text-icon" />
-          <span className="text-xs ml-1 text-secondary font-sans">
+          <ClockIcon className="text-icon h-3 w-3" />
+          <time
+            className="text-secondary ml-1 font-sans text-xs"
+            dateTime={new Date(time * 1000).toISOString()}
+            suppressHydrationWarning
+          >
             {prettyTime(time)}
-          </span>
+          </time>
         </div>
       </div>
     </div>
   );
-};
-
-export default Meta;
+}
