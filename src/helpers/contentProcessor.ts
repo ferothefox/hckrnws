@@ -1,17 +1,23 @@
-/**
- * Pre-processes HTML content to style quote blocks without post-render DOM manipulation
- * Replaces paragraphs starting with ">" with properly styled paragraphs
- * Works in both server and client environments
- */
 export function processContent(htmlContent: string): string {
   if (!htmlContent) {
     return "";
   }
 
-  const normalizedContent = htmlContent.replace(/&gt;/g, ">");
-  const quotePattern1 = /<p[^>]*>\s*(>)\s*([\s\S]*?)<\/p>/g;
+  const quoteParagraphPattern = /<p([^>]*)>\s*(?:&gt;|>)\s*([\s\S]*?)<\/p>/gi;
 
-  return normalizedContent.replace(quotePattern1, (_, __, content) => {
-    return `<p class="quotes">${content.trim()}</p>`;
-  });
+  if (!quoteParagraphPattern.test(htmlContent)) {
+    return htmlContent;
+  }
+
+  quoteParagraphPattern.lastIndex = 0;
+
+  return htmlContent.replace(
+    quoteParagraphPattern,
+    (_, attributes, content) => {
+      const normalizedContent = content.trim();
+      const paragraphAttributes = attributes ?? "";
+
+      return `<blockquote class="quotes"><p${paragraphAttributes}>${normalizedContent}</p></blockquote>`;
+    },
+  );
 }

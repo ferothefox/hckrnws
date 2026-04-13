@@ -11,7 +11,6 @@ import {
   SunIcon,
   MoonIcon,
   StarIcon,
-  SearchIcon,
 } from "@/icons";
 import Dropdown from "../Common/Dropdown";
 import { useHydrated } from "@/hooks/useHydrated";
@@ -28,7 +27,6 @@ export default function Header() {
   useKeyPress("n", () => router.push("/new/1"));
   useKeyPress("a", () => router.push("/ask/1"));
   useKeyPress("x", () => router.push("/star"));
-  useKeyPress("e", () => router.push("/search"));
 
   if (!hydrated) return null;
 
@@ -73,14 +71,6 @@ export default function Header() {
       ),
       kbd: "X",
     },
-    {
-      label: "Search",
-      id: "search",
-      icon: (
-        <SearchIcon className="text-icon group-hover:text-primary mr-2 h-4 w-4" />
-      ),
-      kbd: "E",
-    },
   ];
 
   const currentSection = pathname?.split("/")[1];
@@ -96,7 +86,7 @@ export default function Header() {
   );
 
   const handleOnClick = (id: string) => {
-    if (id === "star" || id === "search") {
+    if (id === "star") {
       router.push(`/${id}`);
     } else {
       router.push(`/${id}/1`);

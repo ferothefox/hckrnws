@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { processContent } from "@/helpers/contentProcessor";
 import type { TDetailedStory, TBaseStory } from "@/types/story";
 
 const API_BASE_URL = "https://api.hnpwa.com/v0";
@@ -59,6 +60,23 @@ export function toBaseStory(story: TBaseStory | TDetailedStory): TBaseStory {
   };
 }
 
+function normalizeCommentContent(comment: TDetailedStory["comments"][number]) {
+  return {
+    ...comment,
+    content: comment.content ? processContent(comment.content) : null,
+    comments: comment.comments.map(normalizeCommentContent),
+  };
+}
+
+function normalizeDetailedStory(story: TDetailedStory): TDetailedStory {
+  return {
+    ...story,
+    url: getStoryUrl(story.url, story.id),
+    content: story.content ? processContent(story.content) : null,
+    comments: story.comments.map(normalizeCommentContent),
+  };
+}
+
 export const getFeedStories = cache(
   async (feed: FeedType, pageNumber: string) => {
     return fetchHnJson<TBaseStory[]>(`${feed}/${pageNumber}.json`, {
@@ -68,7 +86,16 @@ export const getFeedStories = cache(
 );
 
 export const getDetailedStory = cache(async (id: string) => {
-  return fetchHnJson<TDetailedStory>(`item/${id}.json`, {
+  const result = await fetchHnJson<TDetailedStory>(`item/${id}.json`, {
     cache: "no-store",
   });
+
+  if (!result.data) {
+    return result;
+  }
+
+  return {
+    ...result,
+    data: normalizeDetailedStory(result.data),
+  };
 });
