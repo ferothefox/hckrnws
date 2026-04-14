@@ -1,5 +1,4 @@
 import { cache } from "react";
-import { processContent } from "@/helpers/contentProcessor";
 import type { TDetailedStory, TBaseStory } from "@/types/story";
 
 const API_BASE_URL = "https://api.hnpwa.com/v0";
@@ -60,20 +59,10 @@ export function toBaseStory(story: TBaseStory | TDetailedStory): TBaseStory {
   };
 }
 
-function normalizeCommentContent(comment: TDetailedStory["comments"][number]) {
-  return {
-    ...comment,
-    content: comment.content ? processContent(comment.content) : null,
-    comments: comment.comments.map(normalizeCommentContent),
-  };
-}
-
 function normalizeDetailedStory(story: TDetailedStory): TDetailedStory {
   return {
     ...story,
     url: getStoryUrl(story.url, story.id),
-    content: story.content ? processContent(story.content) : null,
-    comments: story.comments.map(normalizeCommentContent),
   };
 }
 

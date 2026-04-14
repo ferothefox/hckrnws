@@ -17,13 +17,14 @@ export default function Meta({
   time,
   isDetailedView = false,
 }: Props) {
+  const containerClassName = isDetailedView
+    ? "mt-0 flex w-auto shrink-0 items-center"
+    : "mt-1 flex w-full justify-between";
+  const itemsClassName = "flex items-center";
+
   return (
-    <div
-      className={`flex w-full justify-between ${
-        isDetailedView ? "mt-0" : "mt-1"
-      }`}
-    >
-      <div className="flex items-center">
+    <div className={containerClassName}>
+      <div className={itemsClassName}>
         <div
           className="fadein-animation mr-2 flex items-center p-1 pl-0"
           style={{ "--fadein-delay": "0s" } as CSSProperties}

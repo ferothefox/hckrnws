@@ -62,14 +62,6 @@ a {
   outline: none;
 }
 
-.quotes {
-  @apply border-secondary text-tertiary my-4! border-l-2 px-4;
-}
-
-.quotes > p {
-  @apply m-0;
-}
-
 /* App Themes */
 [data-theme="light"] {
   --color-text-primary: #18181b;

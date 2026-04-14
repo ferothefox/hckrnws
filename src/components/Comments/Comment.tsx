@@ -2,7 +2,7 @@
 
 import { prettyTime } from "@/helpers/time";
 import { memo } from "react";
-import { ChevronDownIcon, ClipboardIcon } from "@/icons";
+import { ChevronDownIcon } from "@/icons";
 import InnerHTMLText from "@/components/Common/InnerHTMLText";
 import type { TComment } from "@/types/story";
 
@@ -21,21 +21,12 @@ const summaryClassName =
   "list-none cursor-pointer [&::-webkit-details-marker]:hidden";
 
 const Comment = memo(function CommentComponent({
-  comment: {
-    user,
-    content,
-    time,
-    deleted,
-    level,
-    comments,
-    comments_count,
-    id,
-  },
+  comment: { user, content, time, deleted, level, comments, comments_count },
   op,
 }: Props) {
   const isCommenterOP = user === op;
   const authorName = user ?? "[deleted]";
-  const margin = 16;
+  const margin = 8;
   const commentStyles = getCommentStyles(level, margin);
 
   return (
@@ -52,21 +43,7 @@ const Comment = memo(function CommentComponent({
                 {authorName} {isCommenterOP ? "• OP" : null}
               </span>
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  className="group/button px-2 py-1 focus-visible:ring-1 focus-visible:ring-blue-500"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    void navigator.clipboard.writeText(
-                      `${window.location.origin}/stories/${id}`,
-                    );
-                  }}
-                  aria-label="Copy story link"
-                >
-                  <ClipboardIcon className="text-icon group-hover/button:text-primary h-3 w-3" />
-                </button>
-                <span className="text-secondary bg-tertiary rounded-sm px-1.5 py-0.5 font-mono text-[10px]">
+                <span className="text-secondary font-mono text-[10px] tabular-nums">
                   {comments_count}
                 </span>
                 <time

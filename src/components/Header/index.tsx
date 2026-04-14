@@ -28,8 +28,6 @@ export default function Header() {
   useKeyPress("a", () => router.push("/ask/1"));
   useKeyPress("x", () => router.push("/star"));
 
-  if (!hydrated) return null;
-
   const dropdownItems = [
     {
       label: "Top",
@@ -93,6 +91,16 @@ export default function Header() {
     }
   };
 
+  const themeIcon = hydrated ? (
+    resolvedTheme === "dark" ? (
+      <SunIcon className="text-icon h-4 w-4" />
+    ) : (
+      <MoonIcon className="text-icon h-4 w-4" />
+    )
+  ) : (
+    <span className="block h-4 w-4" aria-hidden="true" />
+  );
+
   return (
     <div className="flex h-16 flex-none items-center justify-between select-none">
       <Link href="/top/1">
@@ -111,11 +119,7 @@ export default function Header() {
           type="button"
           aria-label="Toggle Theme"
         >
-          {resolvedTheme === "dark" ? (
-            <SunIcon className="text-icon h-4 w-4" />
-          ) : (
-            <MoonIcon className="text-icon h-4 w-4" />
-          )}
+          {themeIcon}
         </button>
       </div>
     </div>

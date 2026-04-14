@@ -22,7 +22,7 @@ export default function Pagination({
       <div className="mb-1 flex items-center justify-center rounded-full">
         {isPrevDisabled ? (
           <span
-            className="border-primary bg-tertiary flex w-20 cursor-not-allowed items-center justify-start rounded-l-full border-r px-4 py-2 opacity-40"
+            className="border-primary bg-secondary flex w-20 cursor-not-allowed items-center justify-start rounded-l-full border-r px-4 py-2 opacity-40"
             aria-disabled="true"
           >
             <ArrowLeftIcon className="text-icon h-4 w-4" />
@@ -33,16 +33,16 @@ export default function Pagination({
         ) : (
           <Link
             href={previousPageHref}
-            className="border-primary bg-tertiary group hover:bg-btn flex w-20 items-center justify-start rounded-l-full border-r px-4 py-2 focus-visible:ring-1 focus-visible:ring-blue-500"
+            className="border-primary bg-secondary hover:bg-tertiary flex w-20 items-center justify-start rounded-l-full border-r px-4 py-2 duration-150 focus-visible:ring-1 focus-visible:ring-blue-500"
           >
-            <ArrowLeftIcon className="text-icon group-hover:text-btn h-4 w-4" />
-            <span className="text-secondary group-hover:text-btn ml-1 font-sans text-sm font-normal">
+            <ArrowLeftIcon className="text-icon h-4 w-4" />
+            <span className="text-secondary ml-1 font-sans text-sm font-normal">
               Prev
             </span>
           </Link>
         )}
         {isNextDisabled ? (
-          <span className="bg-tertiary flex w-20 cursor-not-allowed items-center justify-end rounded-r-full px-4 py-2 opacity-40">
+          <span className="bg-secondary flex w-20 cursor-not-allowed items-center justify-end rounded-r-full px-4 py-2 opacity-40">
             <span className="text-secondary mr-1 font-sans text-sm font-normal">
               Next
             </span>
@@ -51,12 +51,12 @@ export default function Pagination({
         ) : (
           <Link
             href={nextPageHref}
-            className="bg-tertiary group hover:bg-btn flex w-20 items-center justify-end rounded-r-full px-4 py-2 focus-visible:ring-1 focus-visible:ring-blue-500"
+            className="bg-secondary hover:bg-tertiary flex w-20 items-center justify-end rounded-r-full px-4 py-2 duration-150 focus-visible:ring-1 focus-visible:ring-blue-500"
           >
-            <span className="text-secondary group-hover:text-btn mr-1 font-sans text-sm font-normal">
+            <span className="text-secondary mr-1 font-sans text-sm font-normal">
               Next
             </span>
-            <ArrowRightIcon className="text-icon group-hover:text-btn h-4 w-4" />
+            <ArrowRightIcon className="text-icon h-4 w-4" />
           </Link>
         )}
       </div>

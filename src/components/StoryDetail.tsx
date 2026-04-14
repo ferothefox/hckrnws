@@ -49,12 +49,12 @@ export default function StoryDetail({ data }: StoryDetailProps) {
         <h2 className="text-primary m-0 mb-1 font-sans text-lg font-medium md:text-xl">
           {decode(title)}
         </h2>
-        <div className="flex min-w-0 items-center overflow-hidden">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
           {domain ? (
             <StoryDomainLink
               url={story.url}
               domain={domain}
-              className="hover:text-primary border-primary text-secondary mt-0.5 mr-3 mb-0.5 inline-block max-w-[128px] min-w-0 truncate border-b font-mono text-xs font-normal focus-visible:ring-1 focus-visible:ring-blue-500 md:max-w-[200px]"
+              className="hover:text-primary border-primary text-secondary mt-0.5 mb-0.5 inline-block max-w-full min-w-0 shrink truncate border-b font-mono text-xs font-normal focus-visible:ring-1 focus-visible:ring-blue-500"
             />
           ) : null}
           <Meta
