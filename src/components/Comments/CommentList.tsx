@@ -1,6 +1,3 @@
-"use client";
-
-import { memo } from "react";
 import type { TComment } from "@/types/story";
 import { CenteredText } from "../Common/Fragments";
 import Comment from "./Comment";
@@ -10,7 +7,7 @@ type Props = {
   op: string;
 };
 
-function CommentList({ comments, op }: Props) {
+export default function CommentList({ comments, op }: Props) {
   if (comments.length === 0) {
     return <CenteredText>No comments posted yet</CenteredText>;
   }
@@ -23,5 +20,3 @@ function CommentList({ comments, op }: Props) {
     </ol>
   );
 }
-
-export default memo(CommentList);

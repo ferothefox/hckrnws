@@ -57,5 +57,7 @@ export function getStoryDescription(content: string | undefined, url: string) {
     ).slice(0, 160);
   }
 
-  return `Discussion of ${url} on Hacker News`;
+  return url
+    ? `Discussion of ${url} on Hacker News`
+    : "Discussion on Hacker News";
 }

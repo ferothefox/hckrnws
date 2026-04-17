@@ -1,7 +1,4 @@
-"use client";
-
 import { prettyTime } from "@/helpers/time";
-import { memo } from "react";
 import { ChevronDownIcon } from "@/icons";
 import InnerHTMLText from "@/components/Common/InnerHTMLText";
 import type { TComment } from "@/types/story";
@@ -20,14 +17,24 @@ const containerClassName =
 const summaryClassName =
   "list-none cursor-pointer [&::-webkit-details-marker]:hidden";
 
-const Comment = memo(function CommentComponent({
-  comment: { user, content, time, deleted, level, comments, comments_count },
+export default function Comment({
+  comment: {
+    author,
+    textHtml,
+    time,
+    isDeleted,
+    isDead,
+    depth,
+    children,
+    replyCount,
+  },
   op,
 }: Props) {
-  const isCommenterOP = user === op;
-  const authorName = user ?? "[deleted]";
+  const isCommenterOP = author === op;
+  const authorName = author ?? "[deleted]";
   const margin = 8;
-  const commentStyles = getCommentStyles(level, margin);
+  const commentStyles = getCommentStyles(depth, margin);
+  const unavailableText = isDead ? "[dead]" : "[deleted]";
 
   return (
     <li className="my-2 list-none" style={commentStyles}>
@@ -44,12 +51,11 @@ const Comment = memo(function CommentComponent({
               </span>
               <div className="flex items-center gap-2">
                 <span className="text-secondary font-mono text-[10px] tabular-nums">
-                  {comments_count}
+                  {replyCount}
                 </span>
                 <time
                   className="text-secondary font-mono text-[10px] select-none"
                   dateTime={new Date(time * 1000).toISOString()}
-                  suppressHydrationWarning
                 >
                   {prettyTime(time)}
                 </time>
@@ -64,15 +70,17 @@ const Comment = memo(function CommentComponent({
           </div>
         </summary>
         <div className={containerClassName}>
-          {deleted ? (
-            <p className="text-secondary font-mono text-sm">[deleted]</p>
+          {isDeleted || isDead ? (
+            <p className="text-secondary font-mono text-sm">
+              {unavailableText}
+            </p>
           ) : (
-            <InnerHTMLText content={content ?? ""} />
+            <InnerHTMLText content={textHtml ?? ""} />
           )}
         </div>
-        {comments.length > 0 ? (
+        {children.length > 0 ? (
           <ol className="m-0 list-none p-0">
-            {comments.map((childComment) => (
+            {children.map((childComment) => (
               <Comment key={childComment.id} comment={childComment} op={op} />
             ))}
           </ol>
@@ -80,6 +88,4 @@ const Comment = memo(function CommentComponent({
       </details>
     </li>
   );
-});
-
-export default Comment;
+}

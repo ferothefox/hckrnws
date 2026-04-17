@@ -26,4 +26,4 @@ pnpm run dev
 
 This project is in no way affiliated with YCombinator or Hackernews. All sources to be accredited to them.
 
-Also a big thanks to the incredible folks at [HNPWA](https://github.com/tastejs/hacker-news-pwas) for making using the hackernews api easy.
+Data is fetched from the official [Hacker News Firebase API](https://github.com/HackerNews/API).

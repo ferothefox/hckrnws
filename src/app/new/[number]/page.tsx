@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { after } from "next/server";
 import PaginatedStoryFeed from "@/components/PaginatedStoryFeed";
 import {
   buildFeedPageTitle,
   feedRouteConfig,
   parseFeedPageNumber,
 } from "@/helpers/feed";
-import { buildStaticPageParams, getFeedStories } from "@/helpers/hn";
+import { getFeedStories, prewarmFeedStoryComments } from "@/helpers/hn";
 
 const routeConfig = feedRouteConfig.new;
 
@@ -14,10 +16,6 @@ type NewPageProps = {
     number: string;
   }>;
 };
-
-export async function generateStaticParams() {
-  return buildStaticPageParams(routeConfig.totalPages);
-}
 
 export async function generateMetadata({
   params,
@@ -31,18 +29,26 @@ export async function generateMetadata({
 
 export default async function NewPage({ params }: NewPageProps) {
   const { number } = await params;
-  const currentPage = parseFeedPageNumber(number, routeConfig.totalPages);
-  const { data, errorCode } = await getFeedStories(
+  const currentPage = parseFeedPageNumber(number, routeConfig.maxPages);
+  const { data, errorCode, totalPages } = await getFeedStories(
     routeConfig.feedType,
-    number,
+    currentPage,
   );
+
+  if (errorCode === 404) {
+    notFound();
+  }
+
+  if (data?.length) {
+    after(() => prewarmFeedStoryComments(data));
+  }
 
   return (
     <PaginatedStoryFeed
       stories={data}
       errorCode={errorCode}
       currentPage={currentPage}
-      totalPages={routeConfig.totalPages}
+      totalPages={totalPages}
       basePath={routeConfig.basePath}
     />
   );

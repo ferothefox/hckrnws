@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CenteredText } from "@/components/Common/Fragments";
+import StoryComments from "@/components/StoryComments";
 import StoryDetail from "@/components/StoryDetail";
 import { getStoryDescription, getStoryTitle, siteConfig } from "@/config/site";
-import { getDetailedStory, getStoryUrl } from "@/helpers/hn";
+import { getStory, getStoryPageData } from "@/helpers/hn";
 
 type StoryPageProps = {
   params: Promise<{
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params,
 }: StoryPageProps): Promise<Metadata> {
   const { id } = await params;
-  const { data, errorCode } = await getDetailedStory(id);
+  const { data, errorCode } = await getStory(id);
 
   if (errorCode || !data) {
     return {
@@ -25,8 +26,8 @@ export async function generateMetadata({
 
   const title = getStoryTitle(data.title);
   const description = getStoryDescription(
-    data.content ?? undefined,
-    getStoryUrl(data.url, data.id),
+    data.textHtml ?? undefined,
+    data.externalUrl ?? "",
   );
 
   return {
@@ -54,7 +55,7 @@ export async function generateMetadata({
 
 export default async function StoryPage({ params }: StoryPageProps) {
   const { id } = await params;
-  const { data, errorCode } = await getDetailedStory(id);
+  const { data, errorCode } = await getStoryPageData(id);
 
   if (errorCode === 404) {
     notFound();
@@ -64,5 +65,15 @@ export default async function StoryPage({ params }: StoryPageProps) {
     return <CenteredText>Oops! Something went wrong :(</CenteredText>;
   }
 
-  return <StoryDetail data={data} />;
+  const authorName = data.author ?? "unknown";
+
+  return (
+    <StoryDetail data={data}>
+      <StoryComments
+        storyId={data.id}
+        op={authorName}
+        commentCount={data.commentCount}
+      />
+    </StoryDetail>
+  );
 }

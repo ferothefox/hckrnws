@@ -1,19 +1,17 @@
-"use client";
-
 import type { CSSProperties } from "react";
 import { prettyTime } from "@/helpers/time";
 import { ClockIcon, CommentIcon, UpvoteIcon } from "@/icons";
 
 type Props = {
-  points: number;
-  comments: number;
+  score: number;
+  commentCount: number;
   time: number;
   isDetailedView?: boolean;
 };
 
 export default function Meta({
-  points,
-  comments,
+  score,
+  commentCount,
   time,
   isDetailedView = false,
 }: Props) {
@@ -30,9 +28,7 @@ export default function Meta({
           style={{ "--fadein-delay": "0s" } as CSSProperties}
         >
           <UpvoteIcon className="text-icon h-3 w-3" />
-          <span className="text-secondary ml-1 font-sans text-xs">
-            {points}
-          </span>
+          <span className="text-secondary ml-1 font-sans text-xs">{score}</span>
         </div>
         <div
           className="fadein-animation mr-2 flex items-center p-1 pl-0"
@@ -40,7 +36,7 @@ export default function Meta({
         >
           <CommentIcon className="text-icon h-3 w-3" />
           <span className="text-secondary ml-1 font-sans text-xs">
-            {comments}
+            {commentCount}
           </span>
         </div>
         <div

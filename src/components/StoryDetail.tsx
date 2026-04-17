@@ -1,35 +1,49 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { decode } from "html-entities";
-import CommentList from "@/components/Comments/CommentList";
 import InnerHTMLText from "@/components/Common/InnerHTMLText";
 import Meta from "@/components/Common/Meta";
 import StoryDomainLink from "@/components/StoryDomainLink";
 import StoryStarButton from "@/components/StoryStarButton";
 import { BackIcon } from "@/icons";
-import { toBaseStory } from "@/helpers/hn";
 import { useKeyPress } from "@/hooks/useKeyPress";
-import type { TDetailedStory } from "@/types/story";
+import type { TBaseStory, TStoryPageData } from "@/types/story";
 
 type StoryDetailProps = {
-  data: TDetailedStory;
+  data: TStoryPageData;
+  children?: ReactNode;
 };
 
-export default function StoryDetail({ data }: StoryDetailProps) {
+export default function StoryDetail({ data, children }: StoryDetailProps) {
   const router = useRouter();
-  const story = toBaseStory(data);
   const {
+    id,
     title,
-    points,
-    user,
+    score,
+    author,
     time,
-    content,
-    comments,
+    textHtml,
+    pollOptions,
     domain,
-    comments_count,
+    externalUrl,
+    commentCount,
   } = data;
-  const authorName = user ?? "unknown";
+  const authorName = author ?? "unknown";
+  const story: TBaseStory = {
+    id,
+    title,
+    score,
+    author,
+    time,
+    type: data.type,
+    externalUrl,
+    discussionPath: data.discussionPath,
+    domain,
+    commentCount,
+    textHtml,
+  };
 
   useKeyPress("Escape", () => router.back());
 
@@ -50,18 +64,18 @@ export default function StoryDetail({ data }: StoryDetailProps) {
           {decode(title)}
         </h2>
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
-          {domain ? (
+          {externalUrl && domain ? (
             <StoryDomainLink
-              url={story.url}
+              url={externalUrl}
               domain={domain}
               className="hover:text-primary border-primary text-secondary mt-0.5 mb-0.5 inline-block max-w-full min-w-0 shrink truncate border-b font-mono text-xs font-normal focus-visible:ring-1 focus-visible:ring-blue-500"
             />
           ) : null}
           <Meta
             time={time}
-            points={points}
+            score={score}
             isDetailedView
-            comments={comments_count}
+            commentCount={commentCount}
           />
         </div>
         <div className="mt-0.5 flex items-center justify-between">
@@ -70,9 +84,38 @@ export default function StoryDetail({ data }: StoryDetailProps) {
           </p>
           <StoryStarButton story={story} />
         </div>
-        {content ? <InnerHTMLText content={content} isDescription /> : null}
+        {textHtml ? <InnerHTMLText content={textHtml} isDescription /> : null}
+        {pollOptions.length > 0 ? (
+          <div className="mt-4">
+            <h3 className="text-primary font-sans text-sm font-medium">
+              Poll options
+            </h3>
+            <ol className="mt-2 flex list-none flex-col gap-2 p-0">
+              {pollOptions.map((pollOption) => (
+                <li
+                  key={pollOption.id}
+                  className="border-primary bg-secondary rounded-sm border p-3"
+                >
+                  <div className="mb-2 flex items-center justify-between gap-3">
+                    <span className="text-primary font-mono text-xs">
+                      {pollOption.score} votes
+                    </span>
+                    {pollOption.author ? (
+                      <span className="text-secondary font-mono text-[10px]">
+                        by {pollOption.author}
+                      </span>
+                    ) : null}
+                  </div>
+                  {pollOption.textHtml ? (
+                    <InnerHTMLText content={pollOption.textHtml} />
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+          </div>
+        ) : null}
       </div>
-      <CommentList comments={comments} op={authorName} />
+      {children}
     </div>
   );
 }
