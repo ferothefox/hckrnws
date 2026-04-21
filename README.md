@@ -27,4 +27,3 @@ pnpm run dev
 This project is in no way affiliated with YCombinator or Hackernews. All sources to be accredited to them.
 
 Data is fetched from the official [Hacker News Firebase API](https://github.com/HackerNews/API).
-asdf
