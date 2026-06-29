@@ -5,7 +5,7 @@
 First, run the development server:
 
 ```bash
-pnpm run dev
+bun dev
 ```
 
 ## Libraries
